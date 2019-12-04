@@ -35,15 +35,15 @@
   <div class="social-media apply-field">
     <%= f.label :social_media, 'SHARE MORE ABOUT YOU' %>
     <div class="check-boxes">
-      <i class="fab fa-linkedin" aria-hidden="true"></i>
-      <i class="fab fa-twitter" aria-hidden="true"></i>
-      <i class="fab fa-instagram" aria-hidden="true"></i>
-      <i class="fab fa-facebook" aria-hidden="true"></i>
+      <i class="fab fa-linkedin social-media-icon linkedin" aria-hidden="true"></i>
+      <i class="fab fa-twitter social-media-icon twitter" aria-hidden="true"></i>
+      <i class="fab fa-instagram social-media-icon instagram" aria-hidden="true"></i>
+      <i class="fab fa-facebook social-media-icon facebook" aria-hidden="true"></i>
     </div>
-    <%= f.input :linkedin, label: 'ARE YOU ON LINKEDIN?', wrapper_html: { class: 'd-none' } %>
-    <%= f.input :twitter, label: 'ARE YOU ON TWITTER?', wrapper_html: { class: 'd-none' } %>
-    <%= f.input :instagram, label: 'ARE YOU ON INSTAGRAM?', wrapper_html: { class: 'd-none' } %>
-    <%= f.input :facebook, label: 'ARE YOU ON FACEBOOK?', wrapper_html: { class: 'd-none' } %>
+    <%= f.input :linkedin, label: false, placeholder: 'ARE YOU ON LINKEDIN?', wrapper_html: { class: 'd-none social-media-input' } %>
+    <%= f.input :twitter, label: false, placeholder: 'ARE YOU ON TWITTER?', wrapper_html: { class: 'd-none social-media-input' } %>
+    <%= f.input :instagram, label: false, placeholder: 'ARE YOU ON INSTAGRAM?', wrapper_html: { class: 'd-none social-media-input' } %>
+    <%= f.input :facebook, label: false, placeholder: 'ARE YOU ON FACEBOOK?', wrapper_html: { class: 'd-none social-media-input' } %>
   </div>
 
   <div class="form-action">

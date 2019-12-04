@@ -49,17 +49,24 @@
         }
       }
       .form-group{
-        margin-bottom: 20px;
+        margin-bottom: 0;
       }
       .apply-field{
         width: 47%;
         min-width: 320px;
         max-width: 490px;
         padding: 0 5px;
+        margin-bottom: 25px;
         .check-boxes{
           display: flex;
           justify-content: space-between;
           padding: 6px 12px;
+          span{
+            height: fit-content;
+            label{
+              margin: 0;
+            }
+          }
         }
       }
       .apply-field.date{
@@ -88,6 +95,16 @@
         margin-top: 50px;
         .apply-button{
           padding: 10px 17.5%;
+        }
+      }
+      .social-media{
+        justify-content: space-acround;
+        i{font-size: 20px;}
+        .social-media-input{
+          margin-top: 20px;
+          ::placeholder{
+            color: black;
+          }
         }
       }
       .message{
