@@ -10,10 +10,66 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_03_143117) do
+ActiveRecord::Schema.define(version: 2019_12_03_144721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bookings", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "room_id"
+    t.string "state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_bookings_on_room_id"
+    t.index ["user_id"], name: "index_bookings_on_user_id"
+  end
+
+  create_table "contracts", force: :cascade do |t|
+    t.bigint "booking_id"
+    t.binary "signature"
+    t.date "signed_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["booking_id"], name: "index_contracts_on_booking_id"
+  end
+
+  create_table "partners", force: :cascade do |t|
+    t.string "name"
+    t.string "company"
+    t.string "email"
+    t.string "phone_code"
+    t.string "phone"
+    t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string "street"
+    t.string "house_number"
+    t.string "city"
+    t.integer "zipcode"
+    t.string "name"
+    t.text "description"
+    t.json "pictures"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.bigint "project_id"
+    t.string "number"
+    t.float "price", default: [], array: true
+    t.string "name"
+    t.float "size"
+    t.text "description"
+    t.string "amenities", default: [], array: true
+    t.json "pictures"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_rooms_on_project_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -23,8 +79,33 @@ ActiveRecord::Schema.define(version: 2019_12_03_143117) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "role"
+    t.string "first_name"
+    t.string "last_name"
+    t.date "dob"
+    t.string "street"
+    t.string "city"
+    t.integer "zipcode"
+    t.string "country"
+    t.date "move_in"
+    t.date "move_out"
+    t.string "instagram"
+    t.string "facebook"
+    t.string "twitter"
+    t.string "linkedin"
+    t.string "job"
+    t.integer "amount_of_people", default: 1
+    t.string "gender", default: [], array: true
+    t.string "prefered_suite", default: [], array: true
+    t.string "phone_number"
+    t.string "phone_code"
+    t.string "photo"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "bookings", "rooms"
+  add_foreign_key "bookings", "users"
+  add_foreign_key "contracts", "bookings"
+  add_foreign_key "rooms", "projects"
 end
