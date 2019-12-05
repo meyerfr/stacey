@@ -23,11 +23,17 @@
   <div class="apply-field">
     <%= f.label :gender, label: 'WHAT IS YOUR GENDER?' %>
     <div class="check-boxes only-one-box"><%= f.collection_check_boxes :gender, [['Male'], ['Female'], ['Other']], :first, :first, multiple: false %></div>
+    <% if user.errors[:gender].any? %>
+      <div class="invalid-feedback d-block"><%= user.errors[:gender].first %></div>
+    <% end %>
   </div>
 
   <div class="apply-field">
     <%= f.label :prefered_suite, 'WHAT SUITE DO YOU PREFER?' %>
     <div class="check-boxes"><%= f.collection_check_boxes :prefered_suite, [['Mighty'], ['Premium'], ['Jumbo']], :first, :last, checked: false %></div>
+    <% if user.errors[:prefered_suite].any? %>
+      <div class="invalid-feedback d-block"><%= user.errors[:prefered_suite].first %></div>
+    <% end %>
   </div>
 
   <%= f.input :amount_of_people, as: :select, collection: [['YES', 2],['NO', 1]], selected: 1, wrapper_html:{ class: 'apply-field'}, include_blank: false, label: 'AS A COUPLE?' %>

@@ -1,0 +1,25 @@
+.calendar-table{
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 4px;
+  .calendar-weeks{
+    text-align: center;
+
+  }
+  .calendar-day{
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 1px 0 0;
+    display: block;
+    font-size: 16px;
+    width: 44px;
+    height: 44px;
+    background-color: transparent;
+    border-radius: 50%;
+    border: 1px solid black;
+    text-align: center;
+    color: var(--text-color-level2, rgba(77, 80, 85, 0.6));
+  }
+}

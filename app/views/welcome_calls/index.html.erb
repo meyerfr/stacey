@@ -1,0 +1,56 @@
+<h1>Listing all Welcome Calls</h1>
+
+<% start_date = params.fetch(:start_date, Date.today).to_date %>
+<% date_range = (start_date.beginning_of_month.beginning_of_week..start_date.end_of_month.end_of_week).to_a %>
+
+<table class="calendar-table">
+  <thead>
+    <tr class="calendar-weeks">
+      <% date_range.slice(0, 7).each do |day| %>
+        <th><%= I18n.t("date.abbr_day_names")[day.wday] %></th>
+      <% end %>
+ <!--      <th>Sun</th>
+      <th>Sun</th>
+      <th>Sun</th>
+      <th>Sun</th>
+      <th>Sun</th>
+      <th>Sun</th>
+      <th>Sun</th> -->
+    </tr>
+  </thead>
+  <tbody>
+     <% date_range.each_slice(7) do |week| %>
+      <tr>
+        <% week.each do |day| %>
+          <td>
+            <button class="calendar-day"><span><%= day.strftime("%d") %></span></button>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+    <tr>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Start time</th>
+      <th>End time</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% WelcomeCall.all.each do |call| %>
+      <tr>
+        <td><%= call.name %></td>
+        <td><%= call.start_time.strftime("%d.%m %Y | %I:%M %p") %></td>
+        <td><%= call.end_time.strftime("%d.%m %Y | %I:%M %p") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

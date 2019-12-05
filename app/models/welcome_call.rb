@@ -1,0 +1,2 @@
+class WelcomeCall < ApplicationRecord
+end

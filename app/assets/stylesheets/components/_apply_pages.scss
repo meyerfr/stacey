@@ -42,6 +42,9 @@
         flex-wrap: nowrap;
         flex-direction: column;
       }
+      .invalid-feedback{
+        padding-left: 12px;
+      }
       label{
         padding-left: 12px;
         abbr[title="required"]{
@@ -105,6 +108,9 @@
           ::placeholder{
             color: black;
           }
+        }
+        .check-boxes{
+          justify-content: space-around;
         }
       }
       .message{

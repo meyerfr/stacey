@@ -5,15 +5,16 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.new(users_params)
-    user.skip_password_validation = true
+    @user = User.new(users_params)
+    @user.skip_password_validation = true
     # Must delete first element of array, to keep database clean, because its an empty string
-    user.gender = user.gender.pop(1)
-    user.prefered_suite = user.prefered_suite.pop(1)
-    user.first_name = user.first_name.capitalize
-    user.last_name = user.last_name.capitalize
-    if user.save!
-      redirect_to user
+    @user.gender = @user.gender.pop(1)
+    @user.prefered_suite = @user.prefered_suite.pop(1)
+    @user.first_name = @user.first_name.capitalize
+    @user.last_name = @user.last_name.capitalize
+    @user.role = 'Applicant'
+    if @user.save
+      redirect_to @user
     else
       render :new
     end
