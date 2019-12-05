@@ -1,11 +1,94 @@
+.calendar-postion{
+  padding: 0 5%;
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
+  margin: 40px 0 30px;
+  .calendar-wrapper{
+    display: flex;
+    flex: 1 1 auto;
+    max-width: 1060px;
+    min-width: 900px;
+    background: white;
+    box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 95%;
+    .calendar-section{
+      padding: 20px 25px 0;
+      h2.header{
+        margin-top: 30px;
+      }
+      h3.header{
+        font-size: 20px;
+        margin-bottom: 20px;
+      }
+      .info{
+        display: flex;
+        align-items: baseline;
+        color: #9A9B9D;
+        i{
+          margin-right: 10px;
+        }
+      }
+    }
+    .calendar-section.info-text{
+      width: 35%;
+      border-right: 1px solid lightgray;
+      padding-top: 30px;
+      img{
+        width: 80px;
+      }
+      .text{
+        font-size: 15px;
+        line-height: 1.5;
+        color: #676767;
+      }
+    }
+    .calendar-section.calendar{
+      width: 39%;
+      .calendar-header{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        .title{
+          margin-left: 8px;
+          color: #676767;
+        }
+        .arrows{
+          display: flex;
+          justify-content: space-between;
+          button{
+            width: 38px;
+            background: transparent;
+            border: none;
+          }
+        }
+      }
+      .timezone.info{
+        color: #4f4f4f;
+        padding-left: 18px;
+        margin-top: 15px;
+        font-size: 14px;
+      }
+    }
+    .calendar-section.choose-time{
+      width: 26%;
+      margin-top: 48px;
+    }
+  }
+}
 .calendar-table{
-  width: 100%;
   table-layout: fixed;
   border-collapse: separate;
   border-spacing: 4px;
   .calendar-weeks{
     text-align: center;
-
+    color: #676767;
+    font-size: 12px;
+    th{
+      font-weight: 400;
+      text-transform: uppercase;
+    }
   }
   .calendar-day{
     position: relative;
@@ -18,8 +101,24 @@
     height: 44px;
     background-color: transparent;
     border-radius: 50%;
-    border: 1px solid black;
+    border: 1px solid transparent;
     text-align: center;
     color: var(--text-color-level2, rgba(77, 80, 85, 0.6));
+  }
+  .calendar-day.is-today span{
+    position: relative;
+  }
+  .calendar-day.is-today span::after{
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    margin-left: -4px;
+    content: '.';
+    font-size: 34px;
+  }
+  .calendar-day.available{
+    font-weight: 600;
+    background-color: var(--primary-color-level4, rgba(0, 162, 255, 0.05));
+    color: var(--primary-color, #00a2ff);
   }
 }

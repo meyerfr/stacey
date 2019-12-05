@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+WelcomeCall.create(start_time: Time.parse('2019-12-05 2pm'), end_time: Time.parse('2019-12-05 2:15pm'))
+WelcomeCall.create(start_time: Time.parse('2019-12-05 3pm'), end_time: Time.parse('2019-12-05 3:15pm'))
+WelcomeCall.create(start_time: Time.parse('2019-12-05 4pm'), end_time: Time.parse('2019-12-05 4:15pm'))
+WelcomeCall.create(start_time: Time.parse('2019-12-05 5pm'), end_time: Time.parse('2019-12-05 5:15pm'))
+WelcomeCall.create(start_time: Time.parse('2019-12-05 6pm'), end_time: Time.parse('2019-12-05 6:15pm'))

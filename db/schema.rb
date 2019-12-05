@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_04_183900) do
+ActiveRecord::Schema.define(version: 2019_12_05_163746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,14 +106,16 @@ ActiveRecord::Schema.define(version: 2019_12_04_183900) do
 
   create_table "welcome_calls", force: :cascade do |t|
     t.string "name"
-    t.date "start_time"
-    t.date "end_time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.bigint "user_id"
+    t.boolean "available", default: true
+    t.index ["user_id"], name: "index_welcome_calls_on_user_id"
   end
 
   add_foreign_key "bookings", "rooms"
   add_foreign_key "bookings", "users"
   add_foreign_key "contracts", "bookings"
   add_foreign_key "rooms", "projects"
+  add_foreign_key "welcome_calls", "users"
 end

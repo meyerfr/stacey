@@ -7,6 +7,7 @@ class User < ApplicationRecord
   validates :first_name, :last_name, :email, :dob, :phone_number, :job, :move_in, :move_out, :amount_of_people, :gender, presence: true
 
   has_many :rooms, through: :bookings
+  has_many :welcome_calls
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable,
