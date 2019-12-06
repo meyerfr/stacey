@@ -56,11 +56,12 @@
         .arrows{
           display: flex;
           justify-content: space-between;
+          .not-clickable{
+            pointer-events: none;
+          }
           a{
             width: 38px;
-            background: transparent;
             text-decoration: none;
-            color: black;
           }
           a:hover{
             text-decoration: none;

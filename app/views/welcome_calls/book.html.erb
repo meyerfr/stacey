@@ -20,14 +20,14 @@
         <div class="title"><%= Date::MONTHNAMES[@month_param.month] %> <%= @month_param.strftime("%Y") %></div>
         <div class="arrows">
           <% if (Date.today + 9.days).month == Date.today.next_month.month %>
-            <%= link_to '<', '#', style: 'pointer-events: none;' %>
-            <%= link_to '>', user_book_user_welcome_call_path(@user, date: @date.strftime("%Y-%m-%d"), month: @month_param.next_month.strftime('%Y-%m-%d')) %>
+            <%= link_to '<', '#', class: 'not-clickable title' %>
+            <%= link_to '>', user_book_user_welcome_call_path(@user, date: @date.strftime("%Y-%m-%d"), month: @month_param.next_month.strftime('%Y-%m-%d')), class: 'title' %>
           <% elsif (@month_param.month == Date.today.next_month.month) %>
-            <%= link_to '<', user_book_user_welcome_call_path(@user, date: @date.strftime("%Y-%m-%d"), month: @month_param.next_month.strftime('%Y-%m-%d')) %>
-            <%= link_to '>', '#', style: 'pointer-events: none;' %>
+            <%= link_to '<', user_book_user_welcome_call_path(@user, date: @date.strftime("%Y-%m-%d"), month: @month_param.next_month.strftime('%Y-%m-%d')), class: 'title' %>
+            <%= link_to '>', '#', class: 'not-clickable title' %>
           <% else %>
-            <%= link_to '<', '#', style: 'pointer-events: none;' %>
-            <%= link_to '>', '#', style: 'pointer-events: none;' %>
+            <%= link_to '<', '#', class: 'not-clickable title' %>
+            <%= link_to '>', '#', class: 'not-clickable title' %>
           <% end %>
         </div>
       </div>
