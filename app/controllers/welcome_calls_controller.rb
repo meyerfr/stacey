@@ -61,10 +61,14 @@ class WelcomeCallsController < ApplicationController
     @welcome_call = WelcomeCall.find(params[:id])
     @welcome_call.available = false
     @welcome_call.user = @user
-    if @welcome_call.update(welcome_calls_params)
-      redirect_to welcome_calls_success
+    @welcome_call.name = "#{@user.first_name} #{@user.last_name}"
+    if @welcome_call.save
+      # Send email with all the information
+      flash[:alert] = "We just send you an email with all informations."
+      redirect_to :root
     else
-      redirect_to edit_user_welcome_call(@user, @welcome_call)
+      flash[:alert] = "Oops, something wrent wrong. Please try it again."
+      redirect_to edit_user_welcome_call(@user)
     end
   end
 
