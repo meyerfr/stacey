@@ -56,10 +56,14 @@
         .arrows{
           display: flex;
           justify-content: space-between;
-          button{
+          a{
             width: 38px;
             background: transparent;
-            border: none;
+            text-decoration: none;
+            color: black;
+          }
+          a:hover{
+            text-decoration: none;
           }
         }
       }
@@ -73,6 +77,9 @@
     .calendar-section.choose-time{
       width: 26%;
       margin-top: 48px;
+      .title{
+        margin-top: -40px;
+      }
       .choose-time-list{
         overflow: scroll;
         max-height: 400px;

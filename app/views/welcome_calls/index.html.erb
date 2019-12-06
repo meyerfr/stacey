@@ -104,7 +104,7 @@
       </div>
       <div class="choose-time-list">
         <div class="time-list">
-          <% if @welcome_calls.all.where(start_time: @date.all_day, available: true).length > 0 %>
+          <% if @welcome_calls.all.where(start_time: @date.all_day, available: true).length.positive? %>
             <% @welcome_calls.all.where(start_time: @date.all_day, available: true).each do |call| %>
               <div class="available-time">
                 <!-- every available time must be inserted in here -->

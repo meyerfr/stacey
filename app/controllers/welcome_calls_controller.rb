@@ -36,8 +36,8 @@ class WelcomeCallsController < ApplicationController
 
   def book
     @user = User.find(params[:user_id])
-    @welcome_calls = WelcomeCall.all.where("start_time > ? AND available = ?", (Date.today + 1.day), true)
-    if params[:date]
+    @welcome_calls = WelcomeCall.all.where("start_time > ? AND start_time < ? AND available = ?", (Date.today + 1.day), (Date.today + 9.days), true)
+    if params[:date] && params[:date].to_date < Date.today + 9.days
       if @welcome_calls.where("start_time = ?", params[:date].to_date).any?
         @date = params[:date].to_date
       else
@@ -50,9 +50,11 @@ class WelcomeCallsController < ApplicationController
 
     # @date = params[:date].present? ? params[:date].to_date : Date.today
     # welcome calls on that date
-    @date_welcome_calls = @welcome_calls.where(start_time: @date.all_day) if @welcome_calls.all.where(start_time: @date.all_day).length > 0
+    @date_welcome_calls = @welcome_calls.where(start_time: @date.all_day) if @welcome_calls.where(start_time: @date.all_day).length.positive?
 
-    @month_param = params[:month] ? "#{params[:month]}-01".to_date : Date.today
+    month_helper = "#{params[:month]}-#{@date.strftime('%d')}".to_date if params[:month]
+    @month_param = params[:month] && Date.today <= month_helper && month_helper <= Date.today + 9.days ? month_helper : Date.today
+    # @month_param = params[:month] ? "#{params[:month]}-01".to_date : Date.today
     @date_range = (@month_param.beginning_of_month.beginning_of_week..@month_param.end_of_month.end_of_week).to_a
   end
 
