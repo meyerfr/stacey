@@ -74,6 +74,32 @@
     .calendar-section.choose-time{
       width: 26%;
       margin-top: 48px;
+      .choose-time-list{
+        overflow: scroll;
+        max-height: 400px;
+        .available-time{
+          padding: 13px 10px;
+          border-radius: 4px;
+          text-align: center;
+          font-weight: 600;
+          outline: none;
+          transition: all 0.3s ease;
+          transition-property: width, transform;
+          position: relative;
+          color: var(--primary-color, #00a2ff);
+          border: 1px solid var(--primary-color-level2, rgba(0, 162, 255, 0.5));
+          vertical-align: top;
+          height: 52px;
+          font-weight: 500;
+          margin-top: 10px;
+        }
+        .available-time:first-child{
+          margin-top: 20px;
+        }
+        .available-time:last-child{
+          margin-bottom: 20px;
+        }
+      }
     }
   }
 }
@@ -95,14 +121,15 @@
     margin-right: auto;
     margin-left: auto;
     padding: 1px 0 0;
-    display: block;
+    display: flex;
     font-size: 16px;
     width: 44px;
     height: 44px;
     background-color: transparent;
     border-radius: 50%;
     border: 1px solid transparent;
-    text-align: center;
+    justify-content: center;
+    align-items: center;
     color: var(--text-color-level2, rgba(77, 80, 85, 0.6));
   }
   .calendar-day.is-today span{
