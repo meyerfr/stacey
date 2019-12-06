@@ -1,140 +1,71 @@
-<!-- link_to "Nonsense search", searches_path(:foo => "bar", :baz => "quux") -->
-<%= link_to 'Add params', welcome_calls_path(date: Date.today, month: Date.today.strftime("%Y-%m")) %>
 <div class="calendar-postion">
-  <div class="calendar-wrapper">
-    <div class="calendar-section info-text">
-      <%= image_tag 'stacey_logo_schwarz', class: 'stacey-logo' %>
-      <h2 class="header">STACEY video call</h2>
-      <div class="duration info">
-        <i class="far fa-clock"></i>
-        <p>15 Minutes</p>
+  <div class="calendar-index-wrapper">
+    <div class="calendar-index-navbar">
+      <div class="options">
+        <% if params[:period] == 'past' %>
+          <div class="option"><%= link_to 'Upcoming', welcome_calls_path(period: 'upcoming') %></div>
+          <div class="option active"><%= link_to 'Past', welcome_calls_path(period: 'past') %></div>
+        <% else %>
+          <div class="option active"><%= link_to 'Upcoming', welcome_calls_path(period: 'upcoming') %></div>
+          <div class="option"><%= link_to 'Past', welcome_calls_path(period: 'past') %></div>
+        <% end %>
+        <!-- <div class="option"><%#= link_to 'Date Range', '#' %></div> -->
       </div>
-      <div class="location info">
-        <i class="fas fa-map-marker-alt"></i>
-        <p>Click on https://appear.in/stacey-living to start the call</p>
+      <div class="query">
+        <%= form_tag welcome_calls_path, method: :get do %>
+          <%= text_field_tag :search,
+            params[:search],
+            class: "form-control",
+            placeholder: "Find a welcome call"
+          %>
+          <%= submit_tag "Search", class: "btn btn-primary d-none" %>
+        <% end %>
       </div>
-      <p class="text">We just want to get to know you a little better & answer every question you might have. Select your favorite time for a short introduction into the world of STACEY.</p>
     </div>
-    <div class="calendar-section calendar">
-      <h3 class="header">Select a Date & Time</h3>
-      <div class="calendar-header">
-        <div class="title"><%= Date::MONTHNAMES[@month_param.month] %> <%= @month_param.strftime("%Y") %></div>
-        <div class="arrows">
-          <button><</button>
-          <button>></button>
+    <div class="calls-container">
+      <% @dates.each do |date| %>
+        <div class="date">
+          <%= date.strftime("%A, %d %B %Y") %>
         </div>
-      </div>
-      <table class="calendar-table">
-        <thead>
-          <tr class="calendar-weeks">
-            <% @date_range.slice(0, 7).each do |day| %>
-              <th><%= I18n.t("date.abbr_day_names")[day.wday] %></th>
-            <% end %>
-          </tr>
-        </thead>
-        <tbody>
-           <% @date_range.each_slice(7) do |week| %>
-            <tr>
-              <% week.each do |day| %>
-                <td>
-                  <!-- correct Code -->
-<!--
-                          Rules for available days:
-                            - all the available days -> are clickable
-                            - these buttons are opening the right side and update available to be false
-                            - user must be redirected to success page and gets a mail with options for canceling or reschedueling
- -->
-                  <% if day.month == @month_param.month %>
-                    <% if @welcome_calls.all.where(start_time: day.all_day, available: true).length > 0 %>
-                      <% if day.today? %>
-                        <%= link_to day.strftime("%-d"), welcome_calls_path(date: day.strftime("%Y-%m-%d")), class: 'calendar-day is-today available btn' %>
-                        <!-- <button class="calendar-day is-today available"><span><%#= day.strftime("%-d") %></span></button> -->
-                      <% else %>
-                        <%= link_to day.strftime("%-d"), welcome_calls_path(date: day.strftime("%Y-%m-%d")), class: 'calendar-day available btn' %>
-                        <!-- <button class="calendar-day available"><span><%#= day.strftime("%-d") %></span></button> -->
-                      <% end %>
-                    <% else %>
-                       <% if day.today? %>
-                        <button class="calendar-day is-today"><span><%= day.strftime("%-d") %></span></button>
-                      <% else %>
-                        <button class="calendar-day"><span><%= day.strftime("%-d") %></span></button>
-                      <% end %>
+        <div class="calls-list">
+          <% unless @welcome_calls.empty? %>
+            <% @welcome_calls.where(start_time: date.all_day).each do |call| %>
+              <div class="call-list-item">
+                <div class="call-time">
+                  <p><%= call.start_time.strftime("%H:%M") %> - <%= call.end_time.strftime("%H:%M") %></p>
+                </div>
+                <div class="call-info">
+                  <p><%= call.name %></p>
+                </div>
+                <!-- this the dropdown -->
+                <div class="user-info d-none">
+                  <ul>
+                    <li>moves in: <%= call.user.move_in.strftime("%d.%B %Y") %></li>
+                    <li>moves out<%= call.user.move_out.strftime("%d.%B %Y") %></li>
+                    <li>Phone: <%= call.user.phone_code %> <%= call.user.phone_number %></li>
+                    <li>Amount of people: <%= call.user.amount_of_people %></li>
+                    <li>Job: <%= call.user.job %></li>
+                    <% if call.user.linkedin %>
+                      <li>LinkedIn<%= call.user.linkedin %></li>
                     <% end %>
-                  <% end %>
-                  <!--  if @welcome_calls.where(start_dat: day, available: true).lenght > 0
-                          if day.today?
-                            <button class="calendar-day is-today available"><span><%#= day.strftime("%-d") %></span></button>
-                          else
-                            <button class="calendar-day available"><span><%#= day.strftime("%-d") %></span></button>
-                          end
-                        else
-
-                          Rules for not available days:
-                            - all the not-available days -> are not clickable
-                          if day.today?
-                            <button class="calendar-day is-today"><span><%#= day.strftime("%-d") %></span></button>
-                          else
-                            <button class="calendar-day"><span><%#= day.strftime("%-d") %></span></button>
-                          end
-                        end -->
-
-                  <!-- wrong Code, not considering the availability  -->
-                  <%# if day.month == @month_param.month %>
-                    <%# if day.today? %>
-                      <!-- <button class="calendar-day is-today"><span><%#= day.strftime("%-d") %></span></button> -->
-                    <%# else %>
-                      <!-- <button class="calendar-day"><span><%#= day.strftime("%-d") %></span></button> -->
-                    <%# end %>
-                  <%# end %>
-                </td>
-              <% end %>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-      <div class="timezone info">
-        <i class="fas fa-globe-europe"></i>
-        <p>Central European Time (<%= Time.now.strftime("%H:%M") %>)</p>
-      </div>
-    </div>
-    <div class="calendar-section choose-time">
-      <div class="choose-time-title">
-        <!-- This must be the selected day, detected by params -->
-          <%= @date.strftime("%A, %d %B") if @date.present? %>
-      </div>
-      <div class="choose-time-list">
-        <div class="time-list">
-          <% if @welcome_calls.all.where(start_time: @date.all_day, available: true).length.positive? %>
-            <% @welcome_calls.all.where(start_time: @date.all_day, available: true).each do |call| %>
-              <div class="available-time">
-                <!-- every available time must be inserted in here -->
-                <%= link_to call.start_time.strftime('%H:%M'), welcome_calls_path(date: @date.strftime("%Y-%m-%d")), class: 'time-button' %>
-                <!-- <button class="time-button">12:00</button> -->
+                    <% if call.user.facebook %>
+                      <li><%= call.user.facebook %></li>
+                    <% end %>
+                    <% if call.user.instagram %>
+                      <li><%= call.user.instagram %></li>
+                    <% end %>
+                    <% if call.user.twitter %>
+                      <li><%= call.user.twitter %></li>
+                    <% end %>
+                  </ul>
+                </div>
               </div>
             <% end %>
+          <% else %>
+            <p>Sorry, but there are no calls with that person scheduled</p>
           <% end %>
         </div>
-      </div>
+      <% end %>
     </div>
   </div>
 </div>
-
-<table class="d-none">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Start time</th>
-      <th>End time</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @welcome_calls.each do |call| %>
-      <tr>
-        <td><%= call.name %></td>
-        <td><%= call.start_time.strftime("%d.%m %Y | %I:%M %p") %></td>
-        <td><%= call.end_time.strftime("%d.%m %Y | %I:%M %p") %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
