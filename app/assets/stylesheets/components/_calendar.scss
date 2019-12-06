@@ -131,6 +131,7 @@
     justify-content: center;
     align-items: center;
     color: var(--text-color-level2, rgba(77, 80, 85, 0.6));
+    pointer-events: none;
   }
   .calendar-day.is-today span{
     position: relative;
@@ -147,5 +148,6 @@
     font-weight: 600;
     background-color: var(--primary-color-level4, rgba(0, 162, 255, 0.05));
     color: var(--primary-color, #00a2ff);
+    pointer-events: unset;
   }
 }

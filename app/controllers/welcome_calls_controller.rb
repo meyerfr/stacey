@@ -34,12 +34,38 @@ class WelcomeCallsController < ApplicationController
   #   @welcome_call = WelcomeCall.new(welcome_calls_params)
   # end
 
-  def edit
-    @welcome_calls = WelcomeCall.all.where("start_time > ?", Date.today)
+  def book
+    @user = User.find(params[:user_id])
+    @welcome_calls = WelcomeCall.all.where("start_time > ? AND available = ?", (Date.today + 1.day), true)
+    if params[:date]
+      if @welcome_calls.where("start_time = ?", params[:date].to_date).any?
+        @date = params[:date].to_date
+      else
+        next_helper = @welcome_calls.where("start_time > ?", params[:date])
+        @date = next_helper.any? ? next_helper.first.start_time.to_date : Date.today
+      end
+    else
+      @date = @welcome_calls.where("start_time > ?", Date.today).first.start_time.to_date
+    end
+
+    # @date = params[:date].present? ? params[:date].to_date : Date.today
+    # welcome calls on that date
+    @date_welcome_calls = @welcome_calls.where(start_time: @date.all_day) if @welcome_calls.all.where(start_time: @date.all_day).length > 0
+
+    @month_param = params[:month] ? "#{params[:month]}-01".to_date : Date.today
+    @date_range = (@month_param.beginning_of_month.beginning_of_week..@month_param.end_of_month.end_of_week).to_a
   end
 
   def update
-
+    @user = User.find(params[:user_id])
+    @welcome_call = WelcomeCall.find(params[:id])
+    @welcome_call.available = false
+    @welcome_call.user = @user
+    if @welcome_call.update(welcome_calls_params)
+      redirect_to welcome_calls_success
+    else
+      redirect_to edit_user_welcome_call(@user, @welcome_call)
+    end
   end
 
   private
@@ -48,7 +74,9 @@ class WelcomeCallsController < ApplicationController
     params.require(:welcome_call).permit(
       :name,
       :start_time,
-      :end_time
+      :end_time,
+      :available,
+      :user_id
     )
   end
 end
