@@ -11,6 +11,9 @@
         <% end %>
         <!-- <div class="option"><%#= link_to 'Date Range', '#' %></div> -->
       </div>
+      <div class="jump-to-call">
+        <%= link_to 'appear.in', 'https://whereby.com/stacey-living', target: :_blank %>
+      </div>
       <div class="query">
         <%= form_tag welcome_calls_path, method: :get do %>
           <%= text_field_tag :search,
@@ -30,32 +33,39 @@
         <div class="calls-list">
           <% unless @welcome_calls.empty? %>
             <% @welcome_calls.where(start_time: date.all_day).each do |call| %>
-              <div class="call-list-item">
-                <div class="call-time">
-                  <p><%= call.start_time.strftime("%H:%M") %> - <%= call.end_time.strftime("%H:%M") %></p>
+              <div class="call-list-item-container">
+                <div class="call-list-item">
+                  <div class="call-time">
+                    <p><%= call.start_time.strftime("%H:%M") %> - <%= call.end_time.strftime("%H:%M") %></p>
+                  </div>
+                  <div class="call-info">
+                    <p><%= call.name %></p>
+                  </div>
+                  <!-- this the dropdown -->
+                  <div class="details d-flex">
+                    <i class="fas fa-caret-right"></i>
+                    <i class="fas fa-caret-down d-none"></i>
+                    <p>Details</p>
+                  </div>
                 </div>
-                <div class="call-info">
-                  <p><%= call.name %></p>
-                </div>
-                <!-- this the dropdown -->
                 <div class="user-info d-none">
                   <ul>
                     <li>moves in: <%= call.user.move_in.strftime("%d.%B %Y") %></li>
-                    <li>moves out<%= call.user.move_out.strftime("%d.%B %Y") %></li>
+                    <li>moves out: <%= call.user.move_out.strftime("%d.%B %Y") %></li>
                     <li>Phone: <%= call.user.phone_code %> <%= call.user.phone_number %></li>
                     <li>Amount of people: <%= call.user.amount_of_people %></li>
                     <li>Job: <%= call.user.job %></li>
-                    <% if call.user.linkedin %>
-                      <li>LinkedIn<%= call.user.linkedin %></li>
+                    <% unless call.user.linkedin.empty? %>
+                      <li>LinkedIn: <%= call.user.linkedin %></li>
                     <% end %>
-                    <% if call.user.facebook %>
-                      <li><%= call.user.facebook %></li>
+                    <% unless call.user.facebook.empty? %>
+                      <li>Facebook: <%= call.user.facebook %></li>
                     <% end %>
-                    <% if call.user.instagram %>
-                      <li><%= call.user.instagram %></li>
+                    <% unless call.user.instagram.empty? %>
+                      <li>Instagram: <%= call.user.instagram %></li>
                     <% end %>
-                    <% if call.user.twitter %>
-                      <li><%= call.user.twitter %></li>
+                    <% unless call.user.twitter.empty? %>
+                      <li>Twitter: <%= call.user.twitter %></li>
                     <% end %>
                   </ul>
                 </div>

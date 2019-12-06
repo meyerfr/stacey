@@ -40,16 +40,38 @@
       background-color: #F9F9F9;
     }
     .calls-list{
-      .call-list-item{
-        display: flex;
-        justify-content: space-between;
-        padding: 20px 50% 20px 16px;
-        align-items: center;
+      .call-list-item-container{
         border-bottom: 1px solid lightgray;
-        p{margin: 0;}
+        transition: all 3s ease;
+        transition-property: height, transform;
       }
       .call-list-item:last-child{
         border: none;
+      }
+      .call-list-item.expanded{
+        transition: all 3s ease;
+        transition-property: height, transform;
+      }
+      .call-list-item{
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 16px;
+        align-items: center;
+        p{margin: 0;}
+        .details{
+          display: flex;
+          align-items: baseline;
+          i{
+            margin-right: 3px;
+          }
+        }
+      }
+      .user-info{
+        display: flex;
+        justify-content: center;
+        ul{
+          list-style: none;
+        }
       }
     }
   }
