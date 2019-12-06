@@ -40,13 +40,16 @@
       background-color: #F9F9F9;
     }
     .calls-list{
+      .list-end{
+        padding: 16px 28px 0;
+        text-align: center;
+        color: gray;
+        font-size: 14px;
+      }
       .call-list-item-container{
         border-bottom: 1px solid lightgray;
         transition: all 3s ease;
         transition-property: height, transform;
-      }
-      .call-list-item:last-child{
-        border: none;
       }
       .call-list-item.expanded{
         transition: all 3s ease;
@@ -55,7 +58,7 @@
       .call-list-item{
         display: flex;
         justify-content: space-between;
-        padding: 20px 16px;
+        padding: 20px 40px;
         align-items: center;
         p{margin: 0;}
         .details{
