@@ -24,15 +24,30 @@ class WelcomeCallsController < ApplicationController
     search_param = params[:search] if params[:search]
     # if search and period
     @welcome_calls = WelcomeCall.all.where("start_time >= ? AND available = ?", Time.now, false)
+
     if period_param
-      if period_param == 'upcoming' # all upcoming calls
-        @welcome_calls = WelcomeCall.all.where("start_time >= ? AND available = ? AND lower(name) = ?", Time.now, false, search_param.downcase) if search_param
-      else # all past calls
-        @welcome_calls = WelcomeCall.all.where("start_time < ? AND available = ? AND lower(name) = ?", Time.now, false, search_param.downcase) if search_param
+      if search_param
+        if period_param == 'upcoming'
+          @welcome_calls = WelcomeCall.all.where("start_time >= ? AND available = ? AND lower(name) = ?", Time.now, false, search_param.downcase) if search_param
+        else
+          @welcome_calls = WelcomeCall.all.where("start_time < ? AND available = ? AND lower(name) = ?", Time.now, false, search_param.downcase) if search_param
+        end
+      else
+        if period_param == 'past'
+          @welcome_calls = WelcomeCall.all.where("start_time < ? AND available = ?", Time.now, false)
+        end
       end
-    elsif search_param
-      @welcome_calls = WelcomeCall.all.where("lower(name) = ?", search_param.downcase)
     end
+
+    # if period_param
+    #   if period_param == 'upcoming' # all upcoming calls
+    #     @welcome_calls = WelcomeCall.all.where("start_time >= ? AND available = ? AND lower(name) = ?", Time.now, false, search_param.downcase) if search_param
+    #   else # all past calls
+    #     @welcome_calls = WelcomeCall.all.where("start_time < ? AND available = ? AND lower(name) = ?", Time.now, false, search_param.downcase) if search_param
+    #   end
+    # elsif search_param
+    #   @welcome_calls = WelcomeCall.all.where("lower(name) = ?", search_param.downcase)
+    # end
     @dates = []
     @welcome_calls.each { |call| @dates << call.start_time.to_date unless @dates.include?(call.start_time.to_date) }
     # @date = params[:date].to_date if present?
