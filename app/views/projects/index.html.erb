@@ -1,0 +1,39 @@
+<%= render 'shared/three_steps_navbar', step: 1 %>
+<div class="cards-wrapper">
+  <div class="flat-choose">
+    <h2>Where Do You Want To Live Next?</h2>
+  </div>
+  <div class="cards-container">
+    <% @projects.each do |project| %>
+      <div class="stacey-card flat-card">
+        <%= render 'shared/carousel' %>
+        <div class="stacey-card-header">
+          <span class="name"><%= project.name %></span>
+          <div class="price">
+            <span class="small">from</span>
+            <span>800 €</span>
+          </div>
+        </div>
+        <div class="ameneties">
+          <!-- each loop -->
+          <span class="amenety">Furnished</span>
+          <span class="amenety">Wifi</span>
+          <span class="amenety">Speakers</span>
+          <span class="amenety">Work Spaces</span>
+          <span class="amenety">Cleaning</span>
+          <span class="amenety">Netflix</span>
+          <span class="amenety">Kitchen</span>
+          <span class="amenety">Tabletennis</span>
+        </div>
+        <div class="stacey-card-button stacey-button">
+          explore <%= project.name %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<% if current_user.present? && current_user.admin? %>
+  <%= link_to 'Create new Flat', new_project_path, class: "stacey-button" %>
+<% end %>
+
+<%= render 'shared/footer' %>

@@ -33,19 +33,21 @@
     }
   }
   .calls-container{
+    .list-end{
+      padding: 16px 28px 0;
+      text-align: center;
+      color: gray;
+      font-size: 14px;
+    }
     .date{
       padding: 16px 24px;
-      border-top: 1px solid #DADADA;
       border-bottom: 1px solid #DADADA;
       background-color: #F9F9F9;
     }
+    .date:first-child{
+      border-top: 1px solid #DADADA;
+    }
     .calls-list{
-      .list-end{
-        padding: 16px 28px 0;
-        text-align: center;
-        color: gray;
-        font-size: 14px;
-      }
       .call-list-item-container{
         border-bottom: 1px solid lightgray;
         transition: all 3s ease;
