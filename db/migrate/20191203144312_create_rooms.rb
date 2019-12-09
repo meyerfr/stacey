@@ -7,7 +7,6 @@ class CreateRooms < ActiveRecord::Migration[5.2]
       t.string :name
       t.float :size
       t.text :description
-      t.string :amenities, array: true, default: []
       t.json :pictures
 
       t.timestamps

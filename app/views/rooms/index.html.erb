@@ -1,38 +1,26 @@
 <%= render 'shared/three_steps_navbar', step: 1 %> <!-- must be step 1 because choosing Project doesn´t count -->
 <!-- this must be the banner of projects pictures -->
-<%#= render 'shared/carousel', pictures: @flat.pictures %>
+<%#= render 'shared/carousel', pictures: @project.pictures %>
 <!-- the quote -->
-<!-- <div class="flat-short-description">
+
+<div class="project-short-description">  <!-- should actually be @project.short-description -->
   A beautiful neighborhood in central Hamburg; everything is here. Find local shops, restaurants and bars nearby. Our community in Eppendorf is just as energetic as the neighborhood.
-</div> -->
-<div class="flat-choose">
-  <h2>Where Do You Want To Live Next?</h2>
 </div>
 <div class="cards-wrapper">
   <div class="cards-container">
     <% 6.times do %>
-      <div class="stacey-card flat-card">
+      <div class="stacey-card" id='room-card'>
         <%= render 'shared/carousel' %>
         <div class="stacey-card-header">
           <span class="name">Basic Suite</span>
           <div class="price">
             <span class="small">from</span>
-            <span>800 €</span>
+            <span>800 €</span> <!-- room.price[0] -->
           </div>
         </div>
-        <div class="ameneties">
-          <!-- each loop -->
-          <span class="amenety">Furnished</span>
-          <span class="amenety">Wifi</span>
-          <span class="amenety">Speakers</span>
-          <span class="amenety">Work Spaces</span>
-          <span class="amenety">Cleaning</span>
-          <span class="amenety">Netflix</span>
-          <span class="amenety">Kitchen</span>
-          <span class="amenety">Tabletennis</span>
-        </div>
+        <%= render 'shared/ameneties' %> <!-- actually: <%#= render 'shared/ameneties', ameneties: room.ameneties %> -->
         <div class="stacey-card-button stacey-button">
-          choose your private suite
+          Explore this Suite <!-- Explore <%#= room.name %> Suite -->
         </div>
       </div>
     <% end %>
@@ -42,7 +30,7 @@
   </div>
 </div>
 <% if current_user.present? && current_user.admin? %>
-  <%= link_to 'Create new Flat', new_project_room_path, class: "stacey-button" %>
+  <%= link_to 'Create new Project', new_project_room_path, class: "stacey-button" %>
 <% end %>
 
 <%= render 'shared/footer' %>

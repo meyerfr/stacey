@@ -1,9 +1,10 @@
 <%= render 'shared/three_steps_navbar', step: 1 %>
 <div class="cards-wrapper">
-  <div class="flat-choose">
+  <div class="project-choose">
     <h2>Where Do You Want To Live Next?</h2>
   </div>
   <div class="cards-container">
+    <% 8.times do %>
     <% @projects.each do |project| %>
       <div class="stacey-card flat-card">
         <%= render 'shared/carousel' %>
@@ -29,6 +30,7 @@
           explore <%= project.name %>
         </div>
       </div>
+    <% end %>
     <% end %>
   </div>
 </div>

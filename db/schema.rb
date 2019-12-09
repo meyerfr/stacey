@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_05_163746) do
+ActiveRecord::Schema.define(version: 2019_12_09_133338) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "amenities", force: :cascade do |t|
+    t.bigint "room_id"
+    t.bigint "project_id"
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_amenities_on_project_id"
+    t.index ["room_id"], name: "index_amenities_on_room_id"
+  end
 
   create_table "bookings", force: :cascade do |t|
     t.bigint "user_id"
@@ -32,6 +42,14 @@ ActiveRecord::Schema.define(version: 2019_12_05_163746) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["booking_id"], name: "index_contracts_on_booking_id"
+  end
+
+  create_table "icons", force: :cascade do |t|
+    t.string "icon_text"
+    t.bigint "amenity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["amenity_id"], name: "index_icons_on_amenity_id"
   end
 
   create_table "partners", force: :cascade do |t|
@@ -64,7 +82,6 @@ ActiveRecord::Schema.define(version: 2019_12_05_163746) do
     t.string "name"
     t.float "size"
     t.text "description"
-    t.string "amenities", default: [], array: true
     t.json "pictures"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -95,7 +112,7 @@ ActiveRecord::Schema.define(version: 2019_12_05_163746) do
     t.string "linkedin"
     t.string "job"
     t.integer "amount_of_people", default: 1
-    t.string "gender", default: [], array: true
+    t.string "gender"
     t.string "prefered_suite", default: [], array: true
     t.string "phone_number"
     t.string "phone_code"
@@ -113,9 +130,12 @@ ActiveRecord::Schema.define(version: 2019_12_05_163746) do
     t.index ["user_id"], name: "index_welcome_calls_on_user_id"
   end
 
+  add_foreign_key "amenities", "projects"
+  add_foreign_key "amenities", "rooms"
   add_foreign_key "bookings", "rooms"
   add_foreign_key "bookings", "users"
   add_foreign_key "contracts", "bookings"
+  add_foreign_key "icons", "amenities"
   add_foreign_key "rooms", "projects"
   add_foreign_key "welcome_calls", "users"
 end
