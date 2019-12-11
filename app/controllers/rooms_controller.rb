@@ -56,7 +56,6 @@ class RoomsController < ApplicationController
       :size,
       :description,
       price: [],
-      amenities: [],
       pictures: []
     )
   end

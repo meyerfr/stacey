@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 2019_12_09_133338) do
   create_table "rooms", force: :cascade do |t|
     t.bigint "project_id"
     t.string "number"
+    t.string "house_number"
     t.float "price", default: [], array: true
     t.string "name"
     t.float "size"

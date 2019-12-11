@@ -18,6 +18,10 @@ class User < ApplicationRecord
     errors.add(:gender, 'Can´t be blank') if gender[0] == ""
   end
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
   private
 
   def password_required?
