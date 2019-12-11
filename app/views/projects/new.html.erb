@@ -1,12 +1,13 @@
 <h1 style="padding-top: 50px">Create a new Project please</h1>
-<%= simple_form_for(@project) do |f| %>
+<%= simple_form_for @project, html: { multipart: true } do |f| %>
   <%= f.input :name, label: 'Name of Project' %>
   <%= f.input :street %>
   <%= f.input :house_number %>
   <%= f.input :zipcode %>
   <%= f.input :city %>
   <%= f.input :description, label: 'Please describe this Project' %>
-  <%= f.label :pictures %>
+  <%= f.label :picture %>
+  <%= f.hidden_field :pictures_cache %>
   <%= f.file_field :pictures, multiple: true %>
   <%= f.submit %>
 <% end %>

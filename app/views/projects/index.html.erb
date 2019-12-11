@@ -3,11 +3,12 @@
   <div class="project-choose">
     <h2>Where Do You Want To Live Next?</h2>
   </div>
+  <%= image_tag Project.first.pictures[0].url %>
   <div class="cards-container">
-    <% 8.times do %>
+    <%# 8.times do %>
     <% @projects.each do |project| %>
       <div class="stacey-card flat-card">
-        <%= render 'shared/carousel' %>
+        <%= render 'shared/carousel', pictures: project.pictures %>
         <div class="stacey-card-header">
           <span class="name"><%= project.name %></span>
           <div class="price">
@@ -31,7 +32,7 @@
         </div>
       </div>
     <% end %>
-    <% end %>
+    <%# end %>
   </div>
 </div>
 <% if current_user.present? && current_user.admin? %>

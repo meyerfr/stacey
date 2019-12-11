@@ -70,14 +70,15 @@ ActiveRecord::Schema.define(version: 2019_12_09_133338) do
     t.integer "zipcode"
     t.string "name"
     t.text "description"
-    t.json "pictures"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.json "pictures"
   end
 
   create_table "rooms", force: :cascade do |t|
     t.bigint "project_id"
     t.string "number"
+    t.string "house_number"
     t.float "price", default: [], array: true
     t.string "name"
     t.float "size"

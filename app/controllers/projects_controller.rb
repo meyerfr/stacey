@@ -9,11 +9,17 @@ class ProjectsController < ApplicationController
   end
 
   def create
+    # @attachment = @item.attachments.create!(:media_files => a, item_id: @item.id, account_id: nil)
     @project = Project.new(projects_params)
     @project.name = @project.name.titleize
     @project.street = @project.street.titleize
     @project.city = @project.city.titleize
     if @project.save
+      # if @project.pictures.length.positive?
+      #   @project.pictures.each do |picture|
+      #     File.delete(picture.filename)
+      #   end
+      # end
       redirect_to projects_path
     else
       render :new

@@ -1,3 +1,4 @@
 class Project < ApplicationRecord
-  has_many :ameneties
+  mount_uploaders :pictures, PictureUploader
+  has_many :amenities
 end
