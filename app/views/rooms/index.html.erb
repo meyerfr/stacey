@@ -1,6 +1,6 @@
 <%= render 'shared/three_steps_navbar', step: 1 %> <!-- must be step 1 because choosing Project doesn´t count -->
 <!-- this must be the banner of projects pictures -->
-<%#= render 'shared/carousel', pictures: @project.pictures %>
+<%= render 'shared/carousel', pictures: @rooms.first.project.pictures %>
 <!-- the quote -->
 
 <div class="project-short-description">  <!-- should actually be @project.short-description -->
@@ -8,9 +8,10 @@
 </div>
 <div class="cards-wrapper">
   <div class="cards-container">
-    <% 6.times do %>
+    <%# 6.times do %>
+    <% @rooms.each do |room| %>
       <div class="stacey-card" id='room-card'>
-        <%= render 'shared/carousel' %>
+        <%= render 'shared/carousel', pictures: room.pictures %>
         <div class="stacey-card-header">
           <span class="name">Basic Suite</span>
           <div class="price">
@@ -18,15 +19,13 @@
             <span>800 €</span> <!-- room.price[0] -->
           </div>
         </div>
-        <%= render 'shared/ameneties' %> <!-- actually: <%#= render 'shared/ameneties', ameneties: room.ameneties %> -->
+        <%= render 'shared/ameneties', amenities: room.amenities %> <!-- actually: <%#= render 'shared/ameneties', ameneties: room.ameneties %> -->
         <div class="stacey-card-button stacey-button">
           Explore this Suite <!-- Explore <%#= room.name %> Suite -->
         </div>
       </div>
     <% end %>
-    <% @rooms.each do |room| %>
-
-    <% end %>
+    <%# end %>
   </div>
 </div>
 <% if current_user.present? && current_user.admin? %>

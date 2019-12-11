@@ -1,6 +1,12 @@
 <div class="ameneties">
   <!-- each loop -->
-  <span class="amenety">
+  <% amenities.each do |amenity| %>
+    <span class="amenety">
+      <%= Icon.find_by(amenity_id: amenity.id).icon_text.html_safe %>
+      <span><%= amenity.title %></span>
+    </span>
+  <% end %>
+<!--   <span class="amenety">
     <i class="fas fa-couch"></i>
     <span>Furnished</span>
   </span>
@@ -31,5 +37,5 @@
   <span class="amenety">
     <i class="fas fa-table-tennis"></i>
     <span>Tabletennis</span>
-  </span>
+  </span> -->
 </div>
