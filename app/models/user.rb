@@ -15,7 +15,7 @@ class User < ApplicationRecord
 
   def validate_array
     errors.add(:prefered_suite, 'Please choose at least one') if prefered_suite[0] == ""
-    errors.add(:gender, 'Can´t be blank') if gender[0] == ""
+    errors.add(:gender, 'Please choose') if gender[0] == ""
   end
 
   def full_name

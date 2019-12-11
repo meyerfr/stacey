@@ -4,7 +4,7 @@ class CreateRooms < ActiveRecord::Migration[5.2]
       t.references :project, foreign_key: true
       t.string :number
       t.string :house_number
-      t.float :price, array: true, default: []
+      t.float :price, array: true
       t.string :name
       t.float :size
       t.text :description

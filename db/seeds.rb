@@ -6,8 +6,10 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+print('create User')
+User.create!(first_name: 'Fritz', last_name: 'Meyer', email: 'fritz@stacey-living.de', role: 'admin', dob: '2000-02-04', city: 'Düsseldorf', country: 'Germany', street: 'Weezer Straße 6', zipcode: 40547, move_in: '2020-01-01', move_out: '2020-04-01', job: 'Developer', gender: ['male'], phone_number: '01737557722', phone_code: '+49', password: 'FritzMeyer', prefered_suite: ['Basic'])
 
-User.create(first_name: 'Fritz', last_name: 'Meyer', email: 'fritz@stacey-living.de', role: 'admin', dob: '2000-02-04', city: 'Düsseldorf', country: 'Germany', street: 'Weezer Straße 6', zipcode: 40547, move_in: '2020-01-01', move_out: '2020-04-01', job: 'Developer', gender: 'male', phone_number: '01737557722', phone_code: '+49', password: 'FritzMeyer')
+# print('create WelcomeCalls')
 # WelcomeCall.create(start_time: Time.parse('2019-12-12 2pm'), end_time: Time.parse('2019-12-12 2:15pm'))
 # WelcomeCall.create(start_time: Time.parse('2019-12-14 3pm'), end_time: Time.parse('2019-12-14 3:15pm'))
 # WelcomeCall.create(start_time: Time.parse('2019-12-15 4pm'), end_time: Time.parse('2019-12-15 4:15pm'))
@@ -16,6 +18,7 @@ User.create(first_name: 'Fritz', last_name: 'Meyer', email: 'fritz@stacey-living
 # WelcomeCall.create(start_time: Time.parse('2019-12-10 6:30pm'), end_time: Time.parse('2019-12-10 6:45pm'))
 # WelcomeCall.create(start_time: Time.parse('2019-12-10 7:00pm'), end_time: Time.parse('2019-12-10 7:15pm'))
 
+# print('create Amenities')
 # wifi = Amenity.create(title: 'High Speed Wifi')
 # speakers = Amenity.create(title: 'Speakers')
 # furnished = Amenity.create(title: 'Furnished')
@@ -29,6 +32,7 @@ User.create(first_name: 'Fritz', last_name: 'Meyer', email: 'fritz@stacey-living
 # one_person = Amenity.create(title: 'One Person')
 # two_people = Amenity.create(title: 'Two People')
 
+# print('create Icons')
 # Icon.create(amenity_id: wifi.id, icon_text: '<i class="fas fa-wifi"></i>')
 # Icon.create(amenity_id: speakers.id, icon_text: '<i class="fas fa-volume-up"></i>')
 # Icon.create(amenity_id: furnished.id, icon_text: '<i class="fas fa-couch"></i>')

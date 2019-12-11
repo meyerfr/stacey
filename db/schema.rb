@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 2019_12_09_133338) do
     t.bigint "project_id"
     t.string "number"
     t.string "house_number"
-    t.float "price", default: [], array: true
+    t.float "price", array: true
     t.string "name"
     t.float "size"
     t.text "description"
@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 2019_12_09_133338) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "role"
+    t.string "role", default: "applicant"
     t.string "first_name"
     t.string "last_name"
     t.date "dob"
@@ -113,8 +113,8 @@ ActiveRecord::Schema.define(version: 2019_12_09_133338) do
     t.string "linkedin"
     t.string "job"
     t.integer "amount_of_people", default: 1
-    t.string "gender"
-    t.string "prefered_suite", default: [], array: true
+    t.string "gender", array: true
+    t.string "prefered_suite", array: true
     t.string "phone_number"
     t.string "phone_code"
     t.string "photo"

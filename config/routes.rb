@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'users#new'
   resources :users do
-    get 'welcome_calls/book', to: 'welcome_calls#book', as: 'book_user_welcome_call'
+    get 'welcome_calls/book', to: 'welcome_calls#book', as: 'book_welcome_call'
     resources :welcome_calls, only: [:update, :destroy]
   end
   resources :partners
