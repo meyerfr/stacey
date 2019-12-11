@@ -1,4 +1,3 @@
-<%= @date %>
 <div class="calendar-postion">
   <div class="calendar-wrapper">
     <div class="calendar-section info-text">
@@ -109,12 +108,15 @@
         <!-- This must be the selected day, detected by params -->
         <% if @date == Date.today %>
           <%#= @date.strftime("%A, %d %B") %>
-          <p>It seems there are no more available timeslots.</p>
-        <% elsif @date != params[:date].to_date && @welcome_calls %>
+          <p>Please choose one of the marked dates which have available timeslots.</p>
+        <% elsif params[:date] && @date != params[:date].to_date && @date_welcome_calls %>
           <p class="title">Next available timeslot</p>
-          <%= @welcome_calls.first.start_time.strftime("%A, %d %B") %>
-        <% elsif @welcome_calls %>
-          <%= @welcome_calls.first.start_time.strftime("%A, %d %B") %>
+          <%= @date_welcome_calls.first.start_time.strftime("%A, %d %B") %>
+        <% elsif @date_welcome_calls %>
+          <% if !params[:date] %>
+            <p class="title">Next available timeslot</p>
+          <% end %>
+          <%= @date_welcome_calls.first.start_time.strftime("%A, %d %B") %>
         <% end %>
       </div>
       <div class="choose-time-list">
