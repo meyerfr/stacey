@@ -1,0 +1,21 @@
+<div class="booking-form-wrapper">
+  <div class="booking-form-section">
+    <%= simple_form_for(booking) do |f| %>
+      <%= f.input :move_in, as: :date, order: [:day, :month, :year], start_year: Date.today.year, end_year: Date.today.year + 1, label: 'WHEN DO YOU WANT TO MOVE IN?' %>
+      <%= f.input :move_out, as: :date, order: [:day, :month, :year], start_year: (Date.today + 3.months).year, end_year: (Date.today + 3.months).year + 1, selected: Date.today + 3.months, label: 'UNTIL WHEN ARE YOU PLANING TO STAY?' %>
+      <%= f.submit 'BOOK', class: 'stacey-button reverse-hover book-button' %>
+    <% end %>
+
+  </div>
+  <div class="booking-form-section pricing">
+    <div class="info-field">
+      <span class="header">rent per month</span>
+      <span class="content">€ 800 per Month</span>
+    </div>
+    <div class="info-field">
+      <span class="header">refundable deposit</span>
+      <span class="content">1 monthly rent</span>
+    </div>
+  </div>
+</div>
+

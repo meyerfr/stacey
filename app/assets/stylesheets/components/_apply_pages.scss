@@ -45,6 +45,11 @@
       .invalid-feedback{
         padding-left: 12px;
       }
+      .invalid-feedback.duration{
+        margin-top: -20px;
+        margin-left: 55%;
+        margin-bottom: 10px;
+      }
       label{
         padding-left: 12px;
         abbr[title="required"]{

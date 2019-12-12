@@ -1,5 +1,6 @@
 class WelcomeCallsController < ApplicationController
   skip_before_action :authenticate_user!
+  before_action :check_booking_auth_token!, only: [:book]
 
   # neccessary actions:
     # admin actions

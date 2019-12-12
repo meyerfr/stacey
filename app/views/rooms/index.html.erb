@@ -19,7 +19,7 @@
             <span>800 €</span> <!-- room.price[0] -->
           </div>
         </div>
-        <%= render 'shared/ameneties', amenities: room.amenities %> <!-- actually: <%#= render 'shared/ameneties', ameneties: room.ameneties %> -->
+        <%= render 'shared/amenities', amenities: room.amenities %>
         <div class="stacey-card-button stacey-button">
           Explore this Suite <!-- Explore <%#= room.name %> Suite -->
         </div>
@@ -29,7 +29,7 @@
   </div>
 </div>
 <% if current_user.present? && current_user.admin? %>
-  <%= link_to 'Create new Project', new_project_room_path, class: "stacey-button" %>
+  <%= link_to 'Create new Room', new_project_room_path, class: "stacey-button" %>
 <% end %>
 
 <%= render 'shared/footer' %>

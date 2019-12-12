@@ -1,31 +1,37 @@
 <%= render 'shared/three_steps_navbar', step: 1 %>
 <%#= render 'shared/carousel', pictures: @room.pictures %>
 
-<div class="room-show-wrapper">
-  <div class="room-basic-infos">
-    <h3><%= @room.name %> Suite</h3>
-    <%= render 'shared/ameneties' %> <!-- , ameneties: @room.ameneties -->
-  </div>
-  <div class="section">
-    <h3>The Suite</h3>
-    <!-- <p><%#= simple_format(strip_tags(@room.description)) %></p> -->
-    <!-- image of floorplan -->
-    <%#= image_tag room.floorplan %>
-  </div>
-  <div class="section">
-    <h3>The location</h3>
-    <!-- <p><%= simple_format(strip_tags(@flat.description)) %></p> -->
-    <!-- image of project -->
-  </div>
-  <div class="section">
-    <h3>What Is The Coliving Buzz All About?</h3>
-    <div class="text">
-      <p>Our members enjoy their individual private suites whilst sharing beautiful common spaces</p>
-      <p>Everything you need is included in one convenient payment (except GEZ): Rent, furniture, internet, utilities, cleaning, events & Netflix + Spotify in the common spaces.</p>
-      <p>Do not take our word for granted, move in and experience the STACEY way of living!</p>
+<div class="carousel-test" style="min-width: 100vw; min-height: 380px; background: black;"></div>
+
+<div class="wrap-room-show-and-booking-form">
+  <div class="room-show-wrapper">
+    <div class="section room-basic-infos">
+      <h3><%= @room.name %> Suite</h3>
+      <%= render 'shared/amenities', amenities: @room.amenities %> <!-- , ameneties: @room.ameneties -->
+    </div>
+    <div class="section">
+      <h3>The Suite</h3>
+      <p><%= simple_format(strip_tags(@room.description)) %></p>
+      <!-- image of floorplan -->
+      <%#= image_tag room.floorplan %>
+    </div>
+    <div class="section">
+      <h3>The location</h3>
+      <p><%= simple_format(strip_tags(@room.project.description)) %></p>
+      <!-- image of project -->
+    </div>
+    <div class="section">
+      <h3>What Is The Coliving Buzz All About?</h3>
+      <div class="text">
+        <p>Our members enjoy their individual private suites whilst sharing beautiful common spaces</p>
+        <p>Everything you need is included in one convenient payment (except GEZ): Rent, furniture, internet, utilities, cleaning, events & Netflix + Spotify in the common spaces.</p>
+        <p>Do not take our word for granted, move in and experience the STACEY way of living!</p>
+      </div>
     </div>
   </div>
+  <%= render 'shared/booking_form', booking: @booking %>
 </div>
+
 
 
 <!-- for the booking form we need the calendar info. Meening we need to know during which times the room is not available. -->
