@@ -61,7 +61,8 @@ class WelcomeCallsController < ApplicationController
   # end
 
   def book
-    @user = User.find(params[:user_id])
+    @booking = Booking.find(params[:booking_id])
+    @user = @booking.user
     @welcome_calls = WelcomeCall.all.where("start_time > ? AND start_time < ? AND available = ?", (Date.today + 1.day), (Date.today + 9.days), true)
     if params[:date] && params[:date].to_date < Date.today + 9.days
       if @welcome_calls.where("start_time = ?", params[:date].to_date).any?

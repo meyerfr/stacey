@@ -8,8 +8,8 @@ class AddAttributesToUsers < ActiveRecord::Migration[5.2]
     add_column :users, :city, :string
     add_column :users, :zipcode, :integer
     add_column :users, :country, :string
-    add_column :users, :move_in, :date
-    add_column :users, :move_out, :date
+    # add_column :users, :move_in, :date
+    # add_column :users, :move_out, :date
     add_column :users, :instagram, :string
     add_column :users, :facebook, :string
     add_column :users, :twitter, :string

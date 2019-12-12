@@ -15,10 +15,10 @@
 
   <%= f.input :job, label: 'WHAT DO YOU DO FOR LIVING?', placeholder: 'YOUR JOB TITLE', wrapper_html:{ class: 'apply-field'} %>
 
-  <%= f.input :move_in, as: :date, order: [:day, :month, :year], start_year: Date.today.year, end_year: Date.today.year + 1, label: 'WHEN DO YOU WANT TO MOVE IN?', wrapper_html:{ class: 'apply-field'} %>
-
-  <%= f.input :move_out, as: :date, order: [:day, :month, :year], start_year: Date.today.year, end_year: Date.today.year + 1, label: 'UNTIL WHEN ARE YOU PLANING TO STAY?', wrapper_html:{ class: 'apply-field'} %>
-
+  <%= f.simple_fields_for :bookings do |b| %>
+    <%= b.input :move_in, as: :date, order: [:day, :month, :year], start_year: Date.today.year, end_year: Date.today.year + 1, label: 'WHEN DO YOU WANT TO MOVE IN?', wrapper_html:{ class: 'apply-field'} %>
+    <%= b.input :move_out, as: :date, order: [:day, :month, :year], start_year: Date.today.year, end_year: Date.today.year + 1, label: 'UNTIL WHEN ARE YOU PLANING TO STAY?', wrapper_html:{ class: 'apply-field'} %>
+  <% end %>
 
   <div class="apply-field">
     <%= f.label :gender, label: 'WHAT IS YOUR GENDER?' %>

@@ -21,9 +21,9 @@
         <div class="arrows">
           <% if (Date.today + 9.days).month == Date.today.next_month.month %>
             <%= link_to '<', '#', class: 'not-clickable title' %>
-            <%= link_to '>', user_book_welcome_call_path(@user, date: @date.strftime("%Y-%m-%d"), month: @month_param.next_month.strftime('%Y-%m-%d')), class: 'title' %>
+            <%= link_to '>', booking_book_welcome_call_path(@booking, date: @date.strftime("%Y-%m-%d"), month: @month_param.next_month.strftime('%Y-%m-%d')), class: 'title' %>
           <% elsif (@month_param.month == Date.today.next_month.month) %>
-            <%= link_to '<', user_book_welcome_call_path(@user, date: @date.strftime("%Y-%m-%d"), month: @month_param.next_month.strftime('%Y-%m-%d')), class: 'title' %>
+            <%= link_to '<', booking_book_welcome_call_path(@booking, date: @date.strftime("%Y-%m-%d"), month: @month_param.next_month.strftime('%Y-%m-%d')), class: 'title' %>
             <%= link_to '>', '#', class: 'not-clickable title' %>
           <% else %>
             <%= link_to '<', '#', class: 'not-clickable title' %>
@@ -54,10 +54,10 @@
                   <% if day.month == @month_param.month %>
                     <% if @welcome_calls.where(start_time: day.all_day, available: true).length.positive? %>
                       <% if day.today? %>
-                        <%= link_to day.strftime("%-d"), user_book_welcome_call_path(@user, date: day.strftime("%Y-%m-%d")), class: 'calendar-day is-today available btn' %>
+                        <%= link_to day.strftime("%-d"), booking_book_welcome_call_path(@booking, date: day.strftime("%Y-%m-%d")), class: 'calendar-day is-today available btn' %>
                         <!-- <button class="calendar-day is-today available"><span><%#= day.strftime("%-d") %></span></button> -->
                       <% else %>
-                        <%= link_to day.strftime("%-d"), user_book_welcome_call_path(@user, date: day.strftime("%Y-%m-%d")), class: 'calendar-day available btn' %>
+                        <%= link_to day.strftime("%-d"), booking_book_welcome_call_path(@booking, date: day.strftime("%Y-%m-%d")), class: 'calendar-day available btn' %>
                         <!-- <button class="calendar-day available"><span><%#= day.strftime("%-d") %></span></button> -->
                       <% end %>
                     <% else %>
@@ -128,7 +128,7 @@
                 <!-- every available time must be inserted in here -->
                 <div class="time-button available-time"><%= call.start_time.strftime('%H:%M') %></div>
                 <%#= link_to call.start_time.strftime('%H:%M'), 'confirm', class: 'confirm-button available-time not-expanded' %>
-                <%= link_to 'Confirm', user_welcome_call_path(@user, call), method: :patch, class: 'confirm-button available-time not-expanded' %>
+                <%= link_to 'Confirm', booking_welcome_call_path(@booking, call), method: :patch, class: 'confirm-button available-time not-expanded' %>
                 <!-- <button class="time-button">12:00</button> -->
               <!-- </div> -->
             <% end %>

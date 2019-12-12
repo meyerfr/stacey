@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(version: 2019_12_09_133338) do
   create_table "bookings", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "room_id"
+    t.date "move_in"
+    t.date "move_out"
     t.string "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -105,8 +107,6 @@ ActiveRecord::Schema.define(version: 2019_12_09_133338) do
     t.string "city"
     t.integer "zipcode"
     t.string "country"
-    t.date "move_in"
-    t.date "move_out"
     t.string "instagram"
     t.string "facebook"
     t.string "twitter"

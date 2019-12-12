@@ -4,10 +4,12 @@ class User < ApplicationRecord
   validate :validate_array
   # validate :validate_prefered_suite
   # validate :validate_gender
-  validates :first_name, :last_name, :email, :dob, :phone_number, :job, :move_in, :move_out, :amount_of_people, :gender, presence: true
+  validates :first_name, :last_name, :email, :dob, :phone_number, :job, :amount_of_people, :gender, presence: true
 
   has_many :rooms, through: :bookings
   has_many :welcome_calls
+  has_many :bookings
+  accepts_nested_attributes_for :bookings, allow_destroy: true
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable,

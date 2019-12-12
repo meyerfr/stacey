@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   skip_before_action :authenticate_user!
   def new
     @user = User.new
+    @user.bookings.new
   end
 
   def create
@@ -13,8 +14,9 @@ class UsersController < ApplicationController
     @user.first_name = @user.first_name.capitalize
     @user.last_name = @user.last_name.capitalize
     @user.role = 'Applicant'
-    if @user.save
-      redirect_to user_book_welcome_call_path(@user)
+    if @user.save!
+      @booking = @user.bookings.last
+      redirect_to booking_book_welcome_call_path(@booking)
     else
       render :new
     end
@@ -61,7 +63,8 @@ class UsersController < ApplicationController
       :instagram,
       :photo,
       gender: [],
-      prefered_suite: []
+      prefered_suite: [],
+      bookings_attributes: Booking.attribute_names.map(&:to_sym).push(:_destroy)
     )
   end
 end
