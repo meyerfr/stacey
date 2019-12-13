@@ -13,8 +13,8 @@ Rails.application.routes.draw do
     resources :projects, only: [:index] do
       resources :rooms, only: [:index, :show]
     end
+    resources :contracts, only: [:new, :create, :show]
   end
-  resources :contracts
   get 'home', to: 'pages#home', as: 'home'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
