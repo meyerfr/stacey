@@ -22,7 +22,6 @@ class ContractsController < ApplicationController
   end
 
   def show
-
   end
 
   private

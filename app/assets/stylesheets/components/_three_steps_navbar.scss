@@ -4,10 +4,12 @@
   background: white;
   padding: 17px;
   align-items: center;
+  z-index: 10;
   .three-steps-navbar-logo{
     position: absolute;
     left: 40px;
     height: 28px;
+    img{height: inherit;}
   }
   .ring{
     color: black;
