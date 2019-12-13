@@ -3,7 +3,8 @@ class RoomsController < ApplicationController
   before_action :check_booking_auth_token!
 
   def index
-    @rooms = Room.all.where(project_id: params[:project_id])
+    @booking = Booking.find(params[:booking_id])
+    @rooms = Project.find(params[:project_id]).rooms
   end
 
   def new

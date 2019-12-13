@@ -1,6 +1,8 @@
 class ProjectsController < ApplicationController
   skip_before_action :authenticate_user!
+  before_action :check_booking_auth_token!, only: [:index]
   def index
+    @booking = Booking.find(params[:booking_id])
     @projects = Project.all
   end
 

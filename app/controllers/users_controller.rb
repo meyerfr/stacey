@@ -14,6 +14,7 @@ class UsersController < ApplicationController
     @user.prefered_suite = @user.prefered_suite.pop(1) if @user.prefered_suite.length.positive?
     @user.first_name = @user.first_name.capitalize
     @user.last_name = @user.last_name.capitalize
+    @user.email = @user.email.downcase
     @user.role = 'Applicant'
     if @user.save
       # create booking. Validation and correct duration has been checked

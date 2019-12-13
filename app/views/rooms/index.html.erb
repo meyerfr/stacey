@@ -13,16 +13,14 @@
       <div class="stacey-card" id='room-card'>
         <%= render 'shared/carousel', pictures: room.pictures %>
         <div class="stacey-card-header">
-          <span class="name">Basic Suite</span>
+          <span class="name"><%= room.name.titleize %> Suite</span>
           <div class="price">
             <span class="small">from</span>
             <span>800 €</span> <!-- room.price[0] -->
           </div>
         </div>
         <%= render 'shared/amenities', amenities: room.amenities %>
-        <div class="stacey-card-button stacey-button">
-          Explore this Suite <!-- Explore <%#= room.name %> Suite -->
-        </div>
+        <%= link_to "explore #{room.name}", booking_project_room_path(@booking.booking_auth_token, @booking, room.project, room), class: 'stacey-card-button stacey-button' %>
       </div>
     <% end %>
     <%# end %>
