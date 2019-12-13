@@ -1,40 +1,40 @@
-<div class="ameneties">
+<div class="amenities">
   <!-- each loop -->
   <% amenities.each do |amenity| %>
-    <span class="amenety">
+    <span class="amenity">
       <%= Icon.find_by(amenity_id: amenity.id).icon_text.html_safe %>
       <span><%= amenity.title %></span>
     </span>
   <% end %>
-<!--   <span class="amenety">
+<!--   <span class="amenity">
     <i class="fas fa-couch"></i>
     <span>Furnished</span>
   </span>
-  <span class="amenety">
+  <span class="amenity">
     <i class="fas fa-wifi"></i>
     <span>Wifi</span>
   </span>
-  <span class="amenety">
+  <span class="amenity">
     <i class="fas fa-volume-up"></i>
     <span>Speakers</span>
   </span>
-  <span class="amenety">
+  <span class="amenity">
     <i class="fas fa-briefcase"></i>
     <span>Work Spaces</span>
   </span>
-  <span class="amenety">
+  <span class="amenity">
     <i class="fas fa-broom"></i>
     <span>Weekly Cleaning</span>
   </span>
-  <span class="amenety">
+  <span class="amenity">
     <i class="fas fa-tv"></i>
     <span>Netflix</span>
   </span>
-  <span class="amenety">
+  <span class="amenity">
     <i class="fas fa-utensils"></i>
     <span>Communal Kitchen</span>
   </span>
-  <span class="amenety">
+  <span class="amenity">
     <i class="fas fa-table-tennis"></i>
     <span>Tabletennis</span>
   </span> -->

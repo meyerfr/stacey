@@ -22,3 +22,13 @@
   color: white;
   text-decoration: none;
 }
+
+.stacey-button.reverse-hover{
+  background: $stacey-pink;
+  color: white;
+}
+
+.stacey-button.reverse-hover:hover{
+  background: transparent;
+  color: black;
+}

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_09_133338) do
+ActiveRecord::Schema.define(version: 2019_12_12_082430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,9 +28,13 @@ ActiveRecord::Schema.define(version: 2019_12_09_133338) do
   create_table "bookings", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "room_id"
+    t.date "move_in"
+    t.date "move_out"
     t.string "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "booking_auth_token"
+    t.date "booking_auth_token_exp"
     t.index ["room_id"], name: "index_bookings_on_room_id"
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
@@ -105,8 +109,6 @@ ActiveRecord::Schema.define(version: 2019_12_09_133338) do
     t.string "city"
     t.integer "zipcode"
     t.string "country"
-    t.date "move_in"
-    t.date "move_out"
     t.string "instagram"
     t.string "facebook"
     t.string "twitter"
