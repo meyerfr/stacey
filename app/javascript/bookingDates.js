@@ -28,6 +28,8 @@ const checkMoveInDate = (event) => {
     moveOutDateSelections[0].value = earliestMoveOutDate.getDate() - 1;
     moveOutDateSelections[1].value = earliestMoveOutDate.getMonth() + 1;
     moveOutDateSelections[2].value = earliestMoveOutDate.getFullYear();
+  } else if (moveOut.childElementCount === 3) {
+    moveOut.children[2].remove();
   }
 }
 
@@ -39,11 +41,22 @@ const checkMoveOutDate = (event) => {
   const moveOutDate = new Date(parseInt(moveOutDateSelections[2].value), parseInt(moveOutDateSelections[1].value)-1, parseInt(moveOutDateSelections[0].value));
   const duration = monthDiff(moveInDate, moveOutDate);
 
-  console.log(moveInDate);
-  console.log(moveOutDate);
-  console.log(duration);
-  if (duration < 3 && moveOut.childElementCount < 3) {
-    moveOut.children[1].insertAdjacentHTML('afterend', '<div class="invalid-feedback d-block js-inserted">3 Month minimum</div>');
+  const earliestMoveOutDate = moveInDate;
+  earliestMoveOutDate.setMonth(earliestMoveOutDate.getMonth() + 3);
+  console.log(moveOutDate)
+  if (duration < 3) {
+    if (moveOut.childElementCount < 3) {
+      moveOut.children[1].insertAdjacentHTML('afterend', `<div class="invalid-feedback d-block js-inserted">Can´t move in on the ${moveOutDate.toLocaleDateString()}. 3 Month minimum.</div>`);
+      moveOutDateSelections[0].value = earliestMoveOutDate.getDate() - 1;
+      moveOutDateSelections[1].value = earliestMoveOutDate.getMonth() + 1;
+      moveOutDateSelections[2].value = earliestMoveOutDate.getFullYear();
+    } else{
+      moveOut.children[2].remove();
+      moveOut.children[1].insertAdjacentHTML('afterend', `<div class="invalid-feedback d-block js-inserted">Can´t move in on the ${moveOutDate.toLocaleDateString()}. 3 Month minimum.</div>`);
+      moveOutDateSelections[0].value = earliestMoveOutDate.getDate() - 1;
+      moveOutDateSelections[1].value = earliestMoveOutDate.getMonth() + 1;
+      moveOutDateSelections[2].value = earliestMoveOutDate.getFullYear();
+    }
   } else if (duration >= 3 && moveOut.childElementCount === 3) {
     moveOut.children[2].remove();
   }
