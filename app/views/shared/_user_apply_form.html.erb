@@ -39,7 +39,18 @@
     <% end %>
   </div>
 
-  <%= f.input :amount_of_people, as: :select, collection: [['YES', 2],['NO', 1]], selected: 1, wrapper_html:{ class: 'apply-field'}, include_blank: false, label: 'AS A COUPLE?' %>
+  <div class="apply-field info-position">
+    <div class="d-flex">
+      <%= f.label :amount_of_people, 'AS A COUPLE?' %>
+      <div class="info-field-wrapper">
+        <div class="info-on-hover"><i class="fas fa-info"></i></div>
+        <div class="info-field-container info d-none">
+          <span>Couples can only move in to our jumbo suites.</span>
+        </div>
+      </div>
+    </div>
+    <%= f.input :amount_of_people, as: :select, collection: [['NO', 1]], selected: 1, include_blank: false, label: false %>
+  </div>
 
   <div class="social-media apply-field">
     <%= f.label :social_media, 'SHARE MORE ABOUT YOU' %>
