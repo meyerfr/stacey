@@ -20,7 +20,7 @@ function addCoupleOption() {
   const jumboCheckBox = document.getElementById('user_prefered_suite_jumbo');
   if (jumboCheckBox) {
     jumboCheckBox.addEventListener('click', function(){
-      const coupleSelection = document.querySelector('.user_amount_of_people').children[1];
+      const coupleSelection = document.querySelector('.user_amount_of_people').children[0];
       if (jumboCheckBox.checked) {
         coupleSelection.insertAdjacentHTML('afterbegin', '<option value="2">YES</option>');
       } else{
