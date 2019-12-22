@@ -11,7 +11,7 @@
     <%= f.input :phone_number, label: 'PHONENUMBER', placeholder: '1682857925', wrapper_html:{ class: 'phone number'} %>
   </div>
 
-  <%= f.input :dob, as: :date, order: [:day, :month, :year], start_year: Date.today.year - 70, end_year: Date.today.year - 18, label: 'WHEN WERE YOU BORN?', wrapper_html:{ class: 'apply-field'} %>
+  <%= f.input :dob, as: :date, order: [:day, :month, :year], start_year: Date.today.year - 70, end_year: Date.today.year - 18, selected: 22.years.ago, label: 'WHEN WERE YOU BORN?', wrapper_html:{ class: 'apply-field'} %>
 
   <%= f.input :job, label: 'WHAT DO YOU DO FOR LIVING?', placeholder: 'YOUR JOB TITLE', wrapper_html:{ class: 'apply-field'} %>
 

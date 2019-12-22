@@ -27,7 +27,7 @@ class UsersController < ApplicationController
       @booking.booking_auth_token_exp = Date.today + 1.week
       @booking.save
       # redirection to calendar page. Schedule welcome call
-      redirect_to booking_book_welcome_call_path(@booking.booking_auth_token, @booking)
+      redirect_to booking_book_welcome_call_path(@booking.booking_auth_token, @booking, date: Date.today)
     else
       @user.bookings.new
       render :new

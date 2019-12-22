@@ -107,7 +107,9 @@
     <div class="calendar-section choose-time">
       <div class="title">
         <!-- This must be the selected day, detected by params -->
-        <% if @date == Date.today %>
+        <% if !@welcome_calls.length.positive? %>
+          <p>Sorry, but it seems we do not have any available timeslots left.</p>
+        <% elsif @date == Date.today %>
           <%#= @date.strftime("%A, %d %B") %>
           <p>Please choose one of the marked dates which have available timeslots.</p>
         <% elsif params[:date] && @date != params[:date].to_date && @date_welcome_calls %>

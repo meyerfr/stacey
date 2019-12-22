@@ -16,10 +16,14 @@
       letter-spacing: 2px;
       font-size: 14px;
       background-image: none;
+      padding: 6px 12px;
     }
     label{
       color: black;
       font-size: 15px;
+      abbr[title="required"]{
+        display: none;
+      }
     }
     .form-control:focus{
       color: black;
