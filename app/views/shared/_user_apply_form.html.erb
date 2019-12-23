@@ -6,7 +6,7 @@
   <%= f.input :email, label: 'EMAIL', placeholder: 'MAX@GMAIL.DE', wrapper_html:{ class: 'apply-field'} %>
 
   <div class="apply-field d-flex">
-    <%= f.input :phone_code, label: 'CODE', wrapper_html:{ class: 'phone code'} %>
+    <%= f.input :phone_code, label: 'CODE', collection: @phone_code, selected: '+49', wrapper_html:{ class: 'phone code'} %>
 
     <%= f.input :phone_number, label: 'PHONENUMBER', placeholder: '1682857925', wrapper_html:{ class: 'phone number'} %>
   </div>
