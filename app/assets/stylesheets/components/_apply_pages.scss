@@ -30,7 +30,7 @@
     display: flex;
     justify-content: center;
     margin-top: 150px;
-    padding-bottom: 200px;
+    padding-bottom: 50px;
     .apply-form{
       display: flex;
       flex-wrap: wrap;
@@ -47,14 +47,13 @@
       }
       .invalid-feedback.duration{
         margin-top: -20px;
-        margin-left: 55%;
         margin-bottom: 10px;
+      }
+      .invalid-feedback.js-inserted{
+        margin-bottom: -23px;
       }
       label{
         padding-left: 12px;
-        abbr[title="required"]{
-          display: none;
-        }
       }
       .form-group{
         margin-bottom: 0;

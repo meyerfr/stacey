@@ -1,0 +1,35 @@
+.contract-page-wrapper{
+  .contract-page-header{
+    text-align: center;
+    padding: 10px 24px;
+    border-bottom: 1px solid #DADADA;
+  }
+  .contract-page-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // height: calc(100vh - 133px);
+    margin: 50px;
+    .contract-user-form{
+      border: 1px solid #777777;
+      border-radius: 5px;
+      padding: 30px;
+      width: 30%;
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+      .stacey-button{
+        width: 100%;
+        padding: 9px;
+      }
+    }
+    #pdf{
+      width: 60%;
+      height: calc(100vh - 133px);
+      embed{
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+}

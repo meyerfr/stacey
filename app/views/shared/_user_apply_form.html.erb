@@ -6,12 +6,12 @@
   <%= f.input :email, label: 'EMAIL', placeholder: 'MAX@GMAIL.DE', wrapper_html:{ class: 'apply-field'} %>
 
   <div class="apply-field d-flex">
-    <%= f.input :phone_code, label: 'CODE', wrapper_html:{ class: 'phone code'} %>
+    <%= f.input :phone_code, label: 'CODE', collection: @phone_code, selected: '+49', wrapper_html:{ class: 'phone code'} %>
 
     <%= f.input :phone_number, label: 'PHONENUMBER', placeholder: '1682857925', wrapper_html:{ class: 'phone number'} %>
   </div>
 
-  <%= f.input :dob, as: :date, order: [:day, :month, :year], start_year: Date.today.year - 70, end_year: Date.today.year - 18, label: 'WHEN WERE YOU BORN?', wrapper_html:{ class: 'apply-field'} %>
+  <%= f.input :dob, as: :date, order: [:day, :month, :year], start_year: Date.today.year - 70, end_year: Date.today.year - 18, selected: 22.years.ago, label: 'WHEN WERE YOU BORN?', wrapper_html:{ class: 'apply-field'} %>
 
   <%= f.input :job, label: 'WHAT DO YOU DO FOR LIVING?', placeholder: 'YOUR JOB TITLE', wrapper_html:{ class: 'apply-field'} %>
 
@@ -39,7 +39,18 @@
     <% end %>
   </div>
 
-  <%= f.input :amount_of_people, as: :select, collection: [['YES', 2],['NO', 1]], selected: 1, wrapper_html:{ class: 'apply-field'}, include_blank: false, label: 'AS A COUPLE?' %>
+  <div class="apply-field info-position">
+    <div class="d-flex">
+      <%= f.label :amount_of_people, 'AS A COUPLE?' %>
+      <div class="info-field-wrapper">
+        <div class="info-on-hover"><i class="fas fa-info"></i></div>
+        <div class="info-field-container info d-none">
+          <span>Couples can only move in to our jumbo suites.</span>
+        </div>
+      </div>
+    </div>
+    <%= f.input :amount_of_people, as: :select, collection: [['NO', 1]], selected: 1, include_blank: false, label: false %>
+  </div>
 
   <div class="social-media apply-field">
     <%= f.label :social_media, 'SHARE MORE ABOUT YOU' %>

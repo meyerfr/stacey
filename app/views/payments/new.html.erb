@@ -1,0 +1,15 @@
+<%= render 'shared/three_steps_navbar', step: 3 %>
+
+<div class="payment-wrapper">
+  <div class="payment-container">
+    <div class="payment-forms">
+      <%= render 'personal_information', user: @booking.user %>
+      <%= render 'stripe_section' %>
+    </div>
+    <div class="booking-summary">
+      <%= render 'booking_summary' %>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>

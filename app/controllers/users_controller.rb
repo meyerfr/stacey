@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   skip_before_action :authenticate_user!
 
   def new
+    @phone_code = %w(+61 +43 +32 +55 +1 +86 +45 +358 +33 +49 +852 +353 +39 +81 +352 +52 +31 +64 +47 +351 +65 +34 +46 +41 +44)
     @user = User.new
     @user.bookings.new
   end
@@ -27,7 +28,7 @@ class UsersController < ApplicationController
       @booking.booking_auth_token_exp = Date.today + 1.week
       @booking.save
       # redirection to calendar page. Schedule welcome call
-      redirect_to booking_book_welcome_call_path(@booking.booking_auth_token, @booking)
+      redirect_to booking_book_welcome_call_path(@booking.booking_auth_token, @booking, date: Date.today)
     else
       @user.bookings.new
       render :new
