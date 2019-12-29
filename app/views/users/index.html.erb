@@ -1,2 +1,62 @@
-<h1>Users#index</h1>
-<p>Find me in app/views/users/index.html.erb</p>
+<div class="users-index-position">
+  <div class="users-index-wrapper">
+    <div class="users-index-navbar">
+      <div class="options">
+        <% if params[:user_group] == 'applicants' %>
+          <%= link_to 'Tenants', users_path(period: 'tenants'), class: 'option' %>
+          <%= link_to 'Applicants', users_path(period: 'applicants'), class: 'option active' %>
+        <% else %>
+          <%= link_to 'Tenants', users_path(period: 'tenants'), class: 'option active' %>
+          <%= link_to 'Applicants', users_path(period: 'applicants'), class: 'option' %>
+        <% end %>
+      </div>
+      <div class="query">
+        <%= form_tag users_path, method: :get do %>
+          <%= text_field_tag :search,
+          params[:search],
+          class: "form-control",
+            placeholder: "Find a user"
+            %>
+            <%= submit_tag "Search", class: "btn btn-primary d-none" %>
+        <% end %>
+      </div>
+    </div>
+    <div class="users-index-container">
+      <% @users.each do |user| %>
+        <div class="user-info">
+          <span><%= user.full_name %></span>
+          <span><%= user.email %></span>
+          <span><%= user.bookings.last.move_in if user.bookings.length.positive? %></span>
+          <span><%= user.bookings.last.move_out if user.bookings.length.positive? %></span>
+        </div>
+        <div class="user-info-detail">
+          <ul>
+            <% if user.role == 'tenant' %>
+              <li>move in: <%= user.bookings.last.move_in.strftime("%d.%B %Y") %></li>
+              <li>move out: <%= user.bookings.last.move_out.strftime("%d.%B %Y") %></li>
+            <% end %>
+            <li>Phone: <%= user.phone_code %> <%= user.phone_number %></li>
+            <li>moves in <%= user.amount_of_people == 1 ? 'alone' : 'as a couple' %></li>
+            <li>Job: <%= user.job %></li>
+            <li>Gender: <%= user.gender.first %></li>
+            <% if user.street.present? %>
+              <li>Address: <%= user.street %>, <%= user.zipcode %> <%= user.city %>, <%= user.country %></li>
+            <% end %>
+            <% if user.linkedin.present? %>
+              <li>LinkedIn: <%= user.linkedin %></li>
+            <% end %>
+            <% if user.facebook.present? %>
+              <li>Facebook: <%= user.facebook %></li>
+            <% end %>
+            <% if user.instagram.present? %>
+              <li>Instagram: <%= user.instagram %></li>
+            <% end %>
+            <% if user.twitter.present? %>
+              <li>Twitter: <%= user.twitter %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

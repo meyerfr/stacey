@@ -36,7 +36,25 @@ class UsersController < ApplicationController
   end
 
   def index
+    user_group_param = params[:user_group] if params[:user_group]
+    search_param = params[:search] if params[:search]
+    # if search and period
     @users = User.all
+
+    if user_group_param
+      if user_group_param == 'applicants'
+        @users = User.all.where(role: 'applicant')
+      elsif user_group_param == 'tenants'
+        @users = User.all.where(role: 'tenant')
+      end
+    end
+    if search_param
+      sql_query = " \
+        users.first_name @@ :query \
+        OR users.last_name @@ :query \
+      "
+      @users = User.where(sql_query, query: "%#{params[:query]}%")
+    end
   end
 
   def show
@@ -63,8 +81,6 @@ class UsersController < ApplicationController
       :phone_number,
       :dob,
       :job,
-      :move_in,
-      :move_out,
       :street,
       :city,
       :zipcode,

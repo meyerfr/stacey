@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_12_082430) do
+ActiveRecord::Schema.define(version: 2019_12_29_093912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,9 +128,9 @@ ActiveRecord::Schema.define(version: 2019_12_12_082430) do
     t.string "name"
     t.datetime "start_time"
     t.datetime "end_time"
-    t.bigint "user_id"
     t.boolean "available", default: true
-    t.index ["user_id"], name: "index_welcome_calls_on_user_id"
+    t.bigint "booking_id"
+    t.index ["booking_id"], name: "index_welcome_calls_on_booking_id"
   end
 
   add_foreign_key "amenities", "projects"
@@ -140,5 +140,5 @@ ActiveRecord::Schema.define(version: 2019_12_12_082430) do
   add_foreign_key "contracts", "bookings"
   add_foreign_key "icons", "amenities"
   add_foreign_key "rooms", "projects"
-  add_foreign_key "welcome_calls", "users"
+  add_foreign_key "welcome_calls", "bookings"
 end

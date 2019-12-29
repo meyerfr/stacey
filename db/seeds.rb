@@ -70,7 +70,3 @@ muehlenkamp = Project.create(name: 'Mühlenkamp', street: 'Dorotheen Straße', h
 
 print('create Rooms')
 Room.create(project_id: muehlenkamp.id, number: '1', house_number: '5', price: [900, 850, 800], name: 'Mighty', size: 15.5, description: 'Scandinavian minimalism in the heart of Hamburg. Our Mighty Suites are our flagship with regard to modern living. A comfy double bed, side table, armchair, floor lamp, closet, hangers, artwork & even bedding are included.', pictures: ['https://res.cloudinary.com/dvuqwvjay/image/upload/v1576075783/M%C3%BChlenkamp/Mighty/IMG_4015_mighty.jpg', 'https://res.cloudinary.com/dvuqwvjay/image/upload/v1576075782/M%C3%BChlenkamp/Mighty/IMG_4021_mighty.jpg', 'https://res.cloudinary.com/dvuqwvjay/image/upload/v1576075782/M%C3%BChlenkamp/Mighty/IMG_4016_mighty.jpg'])
-
-
-
-

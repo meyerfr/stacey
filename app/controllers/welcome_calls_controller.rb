@@ -87,18 +87,16 @@ class WelcomeCallsController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:user_id])
+    @booking = Booking.find(params[:booking_id])
+    @user = @booking.user
     @welcome_call = WelcomeCall.find(params[:id])
-    @welcome_call.available = false
-    @welcome_call.user = @user
-    @welcome_call.name = "#{@user.first_name} #{@user.last_name}"
-    if @welcome_call.save
+    if @welcome_call.update(available: false, booking_id: @booking.id, name: @user.full_name)
       # Send email with all the information
       flash[:alert] = "We just send you an email with all informations."
       redirect_to :root
     else
       flash[:alert] = "Oops, something wrent wrong. Please try it again."
-      redirect_to edit_user_welcome_call(@user)
+      redirect_to booking_book_welcome_call_path(@booking.booking_auth_token, @booking)
     end
   end
 
@@ -110,7 +108,7 @@ class WelcomeCallsController < ApplicationController
       :start_time,
       :end_time,
       :available,
-      :user_id
+      :booking_id
     )
   end
 end

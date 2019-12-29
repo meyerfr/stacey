@@ -50,22 +50,22 @@
                 </div>
                 <div class="user-info d-none">
                   <ul>
-                    <li>moves in: <%= call.user.move_in.strftime("%d.%B %Y") %></li>
-                    <li>moves out: <%= call.user.move_out.strftime("%d.%B %Y") %></li>
-                    <li>Phone: <%= call.user.phone_code %> <%= call.user.phone_number %></li>
-                    <li>Amount of people: <%= call.user.amount_of_people %></li>
-                    <li>Job: <%= call.user.job %></li>
-                    <% unless call.user.linkedin.empty? %>
-                      <li>LinkedIn: <%= call.user.linkedin %></li>
+                    <li>moves in: <%= call.booking.user.move_in.strftime("%d.%B %Y") %></li>
+                    <li>moves out: <%= call.booking.user.move_out.strftime("%d.%B %Y") %></li>
+                    <li>Phone: <%= call.booking.user.phone_code %> <%= call.booking.user.phone_number %></li>
+                    <li>Amount of people: <%= call.booking.user.amount_of_people %></li>
+                    <li>Job: <%= call.booking.user.job %></li>
+                    <% unless call.booking.user.linkedin.empty? %>
+                      <li>LinkedIn: <%= call.booking.user.linkedin %></li>
                     <% end %>
-                    <% unless call.user.facebook.empty? %>
-                      <li>Facebook: <%= call.user.facebook %></li>
+                    <% unless call.booking.user.facebook.empty? %>
+                      <li>Facebook: <%= call.booking.user.facebook %></li>
                     <% end %>
-                    <% unless call.user.instagram.empty? %>
-                      <li>Instagram: <%= call.user.instagram %></li>
+                    <% unless call.booking.user.instagram.empty? %>
+                      <li>Instagram: <%= call.booking.user.instagram %></li>
                     <% end %>
-                    <% unless call.user.twitter.empty? %>
-                      <li>Twitter: <%= call.user.twitter %></li>
+                    <% unless call.booking.user.twitter.empty? %>
+                      <li>Twitter: <%= call.booking.user.twitter %></li>
                     <% end %>
                   </ul>
                 </div>
