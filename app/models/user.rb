@@ -9,7 +9,7 @@ class User < ApplicationRecord
 
   has_many :rooms, through: :bookings
   has_many :welcome_calls
-  has_many :bookings, index_errors: true
+  has_many :bookings, index_errors: true, dependent: :destroy
   accepts_nested_attributes_for :bookings, allow_destroy: true
 
   # Include default devise modules. Others available are:

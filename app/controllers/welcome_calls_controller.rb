@@ -26,14 +26,14 @@ class WelcomeCallsController < ApplicationController
     # if search and period
     @welcome_calls = WelcomeCall.all.where("start_time >= ? AND available = ?", Time.now, false)
 
-    if period_param
-      if search_param && period_param == 'upcoming'
-        @welcome_calls = WelcomeCall.all.where("start_time >= ? AND available = ? AND lower(name) = ?", Time.now, false, search_param.downcase) if search_param
-      elsif search_param && period_param == 'past'
-        @welcome_calls = WelcomeCall.all.where("start_time < ? AND available = ? AND lower(name) = ?", Time.now, false, search_param.downcase) if search_param
-      elsif period_param == 'past'
-        @welcome_calls = WelcomeCall.all.where("start_time < ? AND available = ?", Time.now, false)
-      end
+    if period_param == 'upcoming'
+      @welcome_calls = WelcomeCall.all.where("start_time >= ? AND available = ?", Time.now, false)
+    elsif period_param == 'past'
+      @welcome_calls = WelcomeCall.all.where("start_time < ? AND available = ?", Time.now, false)
+    end
+
+    if search_param
+      @welcome_calls = WelcomeCall.all.where("name ILIKE ?", "%#{params[:search]}%")
     end
 
     # if search_param && period_param
@@ -80,8 +80,8 @@ class WelcomeCallsController < ApplicationController
     # welcome calls on that date
     @date_welcome_calls = @welcome_calls.where(start_time: @date.all_day) if @welcome_calls.where(start_time: @date.all_day).length.positive?
 
-    month_helper = "#{params[:month]}-#{@date.strftime('%d')}".to_date if params[:month]
-    @month_param = params[:month] && Date.today <= month_helper && month_helper <= Date.today + 9.days ? month_helper : Date.today
+    @month_helper = params[:month].to_date if params[:month]
+    @month_param = params[:month] && Date.today <= @month_helper && @month_helper <= Date.today + 9.days ? @month_helper : Date.today
     # @month_param = params[:month] ? "#{params[:month]}-01".to_date : Date.today
     @date_range = (@month_param.beginning_of_month.beginning_of_week..@month_param.end_of_month.end_of_week).to_a
   end
@@ -92,6 +92,7 @@ class WelcomeCallsController < ApplicationController
     @welcome_call = WelcomeCall.find(params[:id])
     if @welcome_call.update(available: false, booking_id: @booking.id, name: @user.full_name)
       # Send email with all the information
+      UserMailer.welcome_call(@booking).deliver_now
       flash[:alert] = "We just send you an email with all informations."
       redirect_to :root
     else

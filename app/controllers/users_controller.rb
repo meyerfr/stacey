@@ -27,6 +27,8 @@ class UsersController < ApplicationController
       @booking.booking_auth_token = Devise.friendly_token
       @booking.booking_auth_token_exp = Date.today + 1.week
       @booking.save
+
+      UserMailer.welcome(@booking).deliver_now #_later(wait_until: 1.minutes.from_now)
       # redirection to calendar page. Schedule welcome call
       redirect_to booking_book_welcome_call_path(@booking.booking_auth_token, @booking, date: Date.today)
     else
@@ -36,8 +38,8 @@ class UsersController < ApplicationController
   end
 
   def index
-    user_group_param = params[:user_group] if params[:user_group]
-    search_param = params[:search] if params[:search]
+    user_group_param = params[:user_group] if params[:user_group].present?
+    search_param = params[:search] if params[:search].present?
     # if search and period
     @users = User.all
 
@@ -50,10 +52,11 @@ class UsersController < ApplicationController
     end
     if search_param
       sql_query = " \
-        users.first_name @@ :query \
-        OR users.last_name @@ :query \
+        users.first_name @@ :search \
+        OR users.last_name @@ :search \
+        OR users.email @@ :search \
       "
-      @users = User.where(sql_query, query: "%#{params[:query]}%")
+      @users = User.where(sql_query, search: "%#{params[:search]}%")
     end
   end
 
