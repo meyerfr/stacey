@@ -50,8 +50,8 @@
                 </div>
                 <div class="user-info d-none">
                   <ul>
-                    <li>moves in: <%= call.booking.user.move_in.strftime("%d.%B %Y") %></li>
-                    <li>moves out: <%= call.booking.user.move_out.strftime("%d.%B %Y") %></li>
+                    <li>moves in: <%= call.booking.move_in.strftime("%d.%B %Y") %></li>
+                    <li>moves out: <%= call.booking.move_out.strftime("%d.%B %Y") %></li>
                     <li>Phone: <%= call.booking.user.phone_code %> <%= call.booking.user.phone_number %></li>
                     <li>Amount of people: <%= call.booking.user.amount_of_people %></li>
                     <li>Job: <%= call.booking.user.job %></li>

@@ -37,12 +37,22 @@
     .users-index-container{
       display: flex;
       flex-direction: column;
-      .user-info{
-        display: flex;
-        justify-content: space-between;
-        color: black;
-        span{
-          width: 25%;
+      .user-info-container{
+        border-bottom: 1px solid lightgray;
+        .user-info{
+          display: flex;
+          justify-content: space-between;
+          color: black;
+          padding: 20px 40px;
+          align-items: center;
+          span{
+            width: 25%;
+          }
+        }
+        .user-info-detail{
+          ul{
+            list-style: none;
+          }
         }
       }
     }

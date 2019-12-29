@@ -43,9 +43,9 @@ class UsersController < ApplicationController
 
     if user_group_param
       if user_group_param == 'applicants'
-        @users = User.all.where(role: 'applicant')
+        @users = User.all.where(role: 'Applicant')
       elsif user_group_param == 'tenants'
-        @users = User.all.where(role: 'tenant')
+        @users = User.all.where(role: 'Tenant')
       end
     end
     if search_param
