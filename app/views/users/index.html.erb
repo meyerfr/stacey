@@ -1,6 +1,6 @@
-<div class="users-index-position">
-  <div class="users-index-wrapper">
-    <div class="users-index-navbar">
+<div class="list-position">
+  <div class="list-wrapper">
+    <div class="list-navbar">
       <div class="options">
         <% if params[:user_group] == 'tenants' %>
           <%= link_to 'Tenants', users_path(user_group: 'tenants'), class: 'option active' %>
@@ -11,9 +11,9 @@
         <% end %>
       </div>
       <% if params[:user_group] == 'tenants' %>
-        <span>We have <%= User.all.where(role: 'Tenant').count %> tenants</span>
+        <span>We have <%= User.all.where(role: 'Tenant').count %> <%= User.all.where(role: 'Tenant').count > 1 ? tenants : tenant %></span>
       <% else %>
-        <span>We have <%= User.all.where(role: 'Applicant').count %> applicants</span>
+        <span>We have <%= User.all.where(role: 'Applicant').count %> <%= User.all.where(role: 'Applicant').count > 1 ? applicants : applicant %></span>
       <% end %>
       <div class="query">
         <%= form_tag users_path, method: :get do %>
@@ -26,16 +26,24 @@
         <% end %>
       </div>
     </div>
-    <div class="users-index-container">
+    <div class="list-container">
       <% @users.each do |user| %>
-        <div class="user-info-container">
-          <div class="user-info">
-            <span><%= user.full_name %></span>
-            <span><%= user.email %></span>
-            <span><%= user.bookings.last.move_in if user.bookings.length.positive? %></span>
-            <span><%= user.bookings.last.move_out if user.bookings.length.positive? %></span>
+        <div class="list-context-container">
+          <div class="list-info">
+            <span class="set-width"><%= user.full_name %></span>
+            <span class="set-width"><%= user.email %></span>
+            <div class="duration-dates set-width">
+              <% if user.bookings.length.positive? %>
+                <%= user.bookings.last.move_in.strftime("%d.%m %Y") %> – <%= user.bookings.last.move_out.strftime("%d.%m %Y") %>
+              <% end %>
+            </div>
+            <div class="details d-flex set-width">
+              <i class="fas fa-caret-right"></i>
+              <i class="fas fa-caret-down d-none"></i>
+              <span>Details</span>
+            </div>
           </div>
-          <div class="user-info-detail">
+          <div class="list-detail d-none">
             <ul>
               <% if user.role == 'tenant' %>
                 <li>move in: <%= user.bookings.last.move_in.strftime("%d.%B %Y") %></li>

@@ -1,13 +1,13 @@
-<div class="calendar-postion">
-  <div class="calendar-index-wrapper">
-    <div class="calendar-index-navbar">
+<div class="list-position">
+  <div class="list-wrapper">
+    <div class="list-navbar">
       <div class="options">
         <% if params[:period] == 'past' %>
-          <div class="option"><%= link_to 'Upcoming', welcome_calls_path(period: 'upcoming') %></div>
-          <div class="option active"><%= link_to 'Past', welcome_calls_path(period: 'past') %></div>
+          <%= link_to 'Upcoming', welcome_calls_path(period: 'upcoming'), class: 'option' %>
+          <%= link_to 'Past', welcome_calls_path(period: 'past'), class: 'option active' %>
         <% else %>
-          <div class="option active"><%= link_to 'Upcoming', welcome_calls_path(period: 'upcoming') %></div>
-          <div class="option"><%= link_to 'Past', welcome_calls_path(period: 'past') %></div>
+          <%= link_to 'Upcoming', welcome_calls_path(period: 'upcoming'), class: 'option active' %>
+          <%= link_to 'Past', welcome_calls_path(period: 'past'), class: 'option' %>
         <% end %>
         <!-- <div class="option"><%#= link_to 'Date Range', '#' %></div> -->
       </div>
@@ -25,56 +25,65 @@
         <% end %>
       </div>
     </div>
-    <div class="calls-container">
+    <div class="list-container">
       <% @dates.each do |date| %>
         <div class="date">
           <%= date.strftime("%A, %d %B %Y") %>
         </div>
-        <div class="calls-list">
+        <!-- <div class="list-context-container"> -->
           <% unless @welcome_calls.empty? %>
             <% @welcome_calls.where(start_time: date.all_day).each do |call| %>
-              <div class="call-list-item-container">
-                <div class="call-list-item">
-                  <div class="call-time">
-                    <p><%= call.start_time.strftime("%H:%M") %> - <%= call.end_time.strftime("%H:%M") %></p>
+              <!-- <div class="call-list-item-container"> -->
+                <div class="list-context-container">
+                  <div class="list-info">
+                    <span><%= call.start_time.strftime("%H:%M") %> - <%= call.end_time.strftime("%H:%M") %></span>
+                    <span><%= call.name %></span>
+                    <div class="details d-flex">
+                      <i class="fas fa-caret-right"></i>
+                      <i class="fas fa-caret-down d-none"></i>
+                      <span>Details</span>
+                    </div>
                   </div>
-                  <div class="call-info">
-                    <p><%= call.name %></p>
-                  </div>
+                  <!-- <div class="call-time">
+                    <p><%#= call.start_time.strftime("%H:%M") %> - <%#= call.end_time.strftime("%H:%M") %></p>
+                  </div> -->
+                  <!-- <div class="call-info">
+                    <p><%#= call.name %></p>
+                  </div> -->
                   <!-- this the dropdown -->
-                  <div class="details d-flex">
+                 <!--  <div class="details d-flex">
                     <i class="fas fa-caret-right"></i>
                     <i class="fas fa-caret-down d-none"></i>
                     <p>Details</p>
+                  </div> -->
+                  <div class="list-detail d-none">
+                    <ul>
+                      <li>moves in: <%= call.booking.move_in.strftime("%d.%B %Y") %></li>
+                      <li>moves out: <%= call.booking.move_out.strftime("%d.%B %Y") %></li>
+                      <li>Phone: <%= call.booking.user.phone_code %> <%= call.booking.user.phone_number %></li>
+                      <li>Amount of people: <%= call.booking.user.amount_of_people %></li>
+                      <li>Job: <%= call.booking.user.job %></li>
+                      <% if call.booking.user.linkedin.present? %>
+                        <li>LinkedIn: <%= call.booking.user.linkedin %></li>
+                      <% end %>
+                      <% if call.booking.user.facebook.present? %>
+                        <li>Facebook: <%= call.booking.user.facebook %></li>
+                      <% end %>
+                      <% if call.booking.user.instagram.present? %>
+                        <li>Instagram: <%= call.booking.user.instagram %></li>
+                      <% end %>
+                      <% if call.booking.user.twitter.present? %>
+                        <li>Twitter: <%= call.booking.user.twitter %></li>
+                      <% end %>
+                    </ul>
                   </div>
                 </div>
-                <div class="user-info d-none">
-                  <ul>
-                    <li>moves in: <%= call.booking.move_in.strftime("%d.%B %Y") %></li>
-                    <li>moves out: <%= call.booking.move_out.strftime("%d.%B %Y") %></li>
-                    <li>Phone: <%= call.booking.user.phone_code %> <%= call.booking.user.phone_number %></li>
-                    <li>Amount of people: <%= call.booking.user.amount_of_people %></li>
-                    <li>Job: <%= call.booking.user.job %></li>
-                    <% unless call.booking.user.linkedin.empty? %>
-                      <li>LinkedIn: <%= call.booking.user.linkedin %></li>
-                    <% end %>
-                    <% unless call.booking.user.facebook.empty? %>
-                      <li>Facebook: <%= call.booking.user.facebook %></li>
-                    <% end %>
-                    <% unless call.booking.user.instagram.empty? %>
-                      <li>Instagram: <%= call.booking.user.instagram %></li>
-                    <% end %>
-                    <% unless call.booking.user.twitter.empty? %>
-                      <li>Twitter: <%= call.booking.user.twitter %></li>
-                    <% end %>
-                  </ul>
-                </div>
-              </div>
+              <!-- </div> -->
             <% end %>
           <% else %>
             <p>Sorry, but there are no calls with that person scheduled</p>
           <% end %>
-        </div>
+        <!-- </div> -->
       <% end %>
       <p class="list-end">You´ve reached the end of the list</p>
     </div>
