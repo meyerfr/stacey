@@ -28,7 +28,7 @@ class UsersController < ApplicationController
       @booking.booking_auth_token_exp = Date.today + 1.week
       @booking.save
 
-      UserMailer.welcome(@booking).deliver_now #_later(wait_until: 1.minutes.from_now)
+      UserMailer.welcome(@booking).deliver_later(wait_until: 20.minutes.from_now)
       # redirection to calendar page. Schedule welcome call
       redirect_to booking_book_welcome_call_path(@booking.booking_auth_token, @booking, date: Date.today)
     else

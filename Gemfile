@@ -10,6 +10,7 @@ gem 'rails', '5.2.3'
 gem 'redis'
 gem "simple_calendar", "~> 2.0"
 gem "letter_opener", group: :development
+gem 'postmark-rails'
 
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'

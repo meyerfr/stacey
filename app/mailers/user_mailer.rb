@@ -7,11 +7,11 @@ class UserMailer < ApplicationMailer
   def welcome(booking)
     @booking = booking
     @user = @booking.user
-    # if WelcomeCall.find_by(booking_id: @booking.id)
-    #   message.perform_deliveries = false
-    # else
+    if WelcomeCall.find_by(booking_id: @booking.id)
+      message.perform_deliveries = false
+    else
       mail(to: @user.email, subject: 'Stacey - coliving')
-    # end
+    end
   end
 
   def welcome_call(booking)

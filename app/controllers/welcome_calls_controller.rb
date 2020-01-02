@@ -90,13 +90,19 @@ class WelcomeCallsController < ApplicationController
     @booking = Booking.find(params[:booking_id])
     @user = @booking.user
     @welcome_call = WelcomeCall.find(params[:id])
-    if @welcome_call.update(available: false, booking_id: @booking.id, name: @user.full_name)
-      # Send email with all the information
-      UserMailer.welcome_call(@booking).deliver_now
-      flash[:alert] = "We just send you an email with all informations."
-      redirect_to :root
+    if @welcome_call.booking.nil?
+      if @welcome_call.update(available: false, booking_id: @booking.id, name: @user.full_name)
+        # Send email with all the information
+        UserMailer.welcome_call(@booking).deliver_now
+        flash[:alert] = "We just send you an email with all informations."
+        redirect_to :root
+      else
+        flash[:alert] = "Oops, something wrent wrong. Please try it again."
+        redirect_to booking_book_welcome_call_path(@booking.booking_auth_token, @booking)
+      end
     else
-      flash[:alert] = "Oops, something wrent wrong. Please try it again."
+      flash[:alert] = "Your call is already scheduled for the #{WelcomeCall.find_by(booking_id: @booking.id).start_time.strftime('%d.%B %Y')}. Please check your mails."
+      # redirect to welcome_call#edit page
       redirect_to booking_book_welcome_call_path(@booking.booking_auth_token, @booking)
     end
   end
