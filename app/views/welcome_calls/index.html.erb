@@ -57,23 +57,25 @@
                     <p>Details</p>
                   </div> -->
                   <div class="list-detail d-none">
+                    <% user = call.booking.user %>
                     <ul>
                       <li>moves in: <%= call.booking.move_in.strftime("%d.%B %Y") %></li>
                       <li>moves out: <%= call.booking.move_out.strftime("%d.%B %Y") %></li>
-                      <li>Phone: <%= call.booking.user.phone_code %> <%= call.booking.user.phone_number %></li>
-                      <li>Amount of people: <%= call.booking.user.amount_of_people %></li>
-                      <li>Job: <%= call.booking.user.job %></li>
-                      <% if call.booking.user.linkedin.present? %>
-                        <li>LinkedIn: <%= call.booking.user.linkedin %></li>
+                      <li>Phone: <%= user.phone_code %> <%= user.phone_number %></li>
+                      <li>Prefered Suites: <%= user.prefered_suite.join(', ') %></li>
+                      <li>moves in <%= user.amount_of_people == 1 ? 'alone' : 'as a couple' %></li>
+                      <li>Job: <%= user.job %></li>
+                      <% if user.linkedin.present? %>
+                        <li>LinkedIn: <%= user.linkedin %></li>
                       <% end %>
-                      <% if call.booking.user.facebook.present? %>
-                        <li>Facebook: <%= call.booking.user.facebook %></li>
+                      <% if user.facebook.present? %>
+                        <li>Facebook: <%= user.facebook %></li>
                       <% end %>
-                      <% if call.booking.user.instagram.present? %>
-                        <li>Instagram: <%= call.booking.user.instagram %></li>
+                      <% if user.instagram.present? %>
+                        <li>Instagram: <%= user.instagram %></li>
                       <% end %>
-                      <% if call.booking.user.twitter.present? %>
-                        <li>Twitter: <%= call.booking.user.twitter %></li>
+                      <% if user.twitter.present? %>
+                        <li>Twitter: <%= user.twitter %></li>
                       <% end %>
                     </ul>
                   </div>

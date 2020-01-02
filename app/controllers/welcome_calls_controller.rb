@@ -1,6 +1,6 @@
 class WelcomeCallsController < ApplicationController
   skip_before_action :authenticate_user!
-  before_action :check_booking_auth_token!, only: [:book]
+  before_action :check_booking_auth_token!, only: [:book, :useredit]
 
   # neccessary actions:
     # admin actions
@@ -104,6 +104,56 @@ class WelcomeCallsController < ApplicationController
       flash[:alert] = "Your call is already scheduled for the #{WelcomeCall.find_by(booking_id: @booking.id).start_time.strftime('%d.%B %Y')}. Please check your mails."
       # redirect to welcome_call#edit page
       redirect_to booking_book_welcome_call_path(@booking.booking_auth_token, @booking)
+    end
+  end
+
+  def useredit
+    @old_welcome_call = WelcomeCall.find(params[:id])
+    @booking = @old_welcome_call.booking
+    @welcome_calls = WelcomeCall.all.where("start_time > ? AND start_time < ? AND available = ?", (Date.today + 1.day), (Date.today + 9.days), true)
+    if params[:date] && params[:date].to_date < Date.today + 9.days
+      if @welcome_calls.where("start_time = ?", params[:date].to_date).any?
+        @date = params[:date].to_date
+      else
+        next_helper = @welcome_calls.where("start_time > ?", params[:date])
+        @date = next_helper.any? ? next_helper.first.start_time.to_date : Date.today
+      end
+    else
+      @date = @welcome_calls.where("start_time > ?", Date.today).first.start_time.to_date
+    end
+
+    # @date = params[:date].present? ? params[:date].to_date : Date.today
+    # welcome calls on that date
+    @date_welcome_calls = @welcome_calls.where(start_time: @date.all_day) if @welcome_calls.where(start_time: @date.all_day).length.positive?
+
+    @month_helper = params[:month].to_date if params[:month]
+    @month_param = params[:month] && Date.today <= @month_helper && @month_helper <= Date.today + 9.days ? @month_helper : Date.today
+    # @month_param = params[:month] ? "#{params[:month]}-01".to_date : Date.today
+    @date_range = (@month_param.beginning_of_month.beginning_of_week..@month_param.end_of_month.end_of_week).to_a
+  end
+
+  def userupdate
+    @old_welcome_call = WelcomeCall.find(params[:old_id])
+    @new_welcome_call = WelcomeCall.find(params[:id])
+    @booking = @welcome_call.booking
+    @user = @booking.user
+    if @new_welcome_call.update(available: false, booking_id: @booking.id, name: @user.full_name)
+      flash[:alert] = 'Our call has been reschedueled. Please check your mails'
+      redirect_to root_path
+    else
+      flash[:alert] = "Oops, something wrent wrong. Please try it again."
+      redirect_to booking_useredit_welcome_call(@booking.booking_auth_token, @booking, @old_welcome_call)
+    end
+  end
+
+  def cancel
+    @welcome_call = WelcomeCall.find(params[:id])
+    if @welcome_call.update(available: true, booking_id: nil, name: nil)
+      flash[:alert] = 'Our call has been canceled.'
+      redirect_to root_path
+    else
+      flash[:alert] = "Oops, something wrent wrong. Please try it again."
+      redirect_to booking_useredit_welcome_call(@booking.booking_auth_token, @booking, @old_welcome_call)
     end
   end
 
