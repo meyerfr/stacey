@@ -1,3 +1,4 @@
+<%= @date_available_times %>
 <div class="calendar-postion">
   <div class="calendar-wrapper">
     <div class="calendar-section info-text">
@@ -59,7 +60,7 @@
                             - user must be redirected to success page and gets a mail with options for canceling or reschedueling
  -->
                   <% if day.month == @month_param.month %>
-                    <% if @welcome_calls.where(start_time: day.all_day, available: true).length.positive? %>
+                    <% if @available_times.select { |available_time| available_time.to_date == day }.length.positive? %>
                       <% if day.today? %>
                         <%= link_to day.strftime("%-d"), booking_book_welcome_call_path(@booking.booking_auth_token, @booking, date: day.strftime("%Y-%m-%d"), month: day.strftime("%Y-%m-%d")), class: 'calendar-day is-today available btn' %>
                         <!-- <button class="calendar-day is-today available"><span><%#= day.strftime("%-d") %></span></button> -->
@@ -75,7 +76,7 @@
                       <% end %>
                     <% end %>
                   <% end %>
-                  <!--  if @welcome_calls.where(start_dat: day, available: true).lenght > 0
+                  <!--  if @available_times.where(start_dat: day, available: true).lenght > 0
                           if day.today?
                             <button class="calendar-day is-today available"><span><%#= day.strftime("%-d") %></span></button>
                           else
@@ -114,31 +115,33 @@
     <div class="calendar-section choose-time">
       <div class="title">
         <!-- This must be the selected day, detected by params -->
-        <% if !@welcome_calls.length.positive? %>
+        <% if !@available_times.length.positive? %>
           <p>Sorry, but it seems we do not have any available timeslots left. Please check again tomorrow.</p>
         <% elsif @date == Date.today %>
           <%#= @date.strftime("%A, %d %B") %>
           <p>Please choose one of the marked dates which have available timeslots.</p>
-        <% elsif params[:date] && @date != params[:date].to_date && @date_welcome_calls %>
+        <% elsif params[:date] && @date != params[:date].to_date && @date_available_times %>
           <p class="title">Next available timeslot</p>
-          <%= @date_welcome_calls.first.start_time.strftime("%A, %d %B") %>
-        <% elsif @date_welcome_calls %>
+          <%= @date_available_times.first.strftime("%A, %d %B") %>
+        <% elsif @date_available_times %>
           <% if !params[:date] %>
             <p class="title">Next available timeslot</p>
           <% end %>
-          <%= @date_welcome_calls.first.start_time.strftime("%A, %d %B") %>
+          <%= @date_available_times.first.strftime("%A, %d %B") %>
         <% end %>
       </div>
       <div class="choose-time-list">
         <div class="time-list">
-          <% if @date_welcome_calls %>
-            <% @date_welcome_calls.each do |call| %>
+          <% if @date_available_times %>
+            <% @date_available_times.each do |call| %>
               <!-- <div class="available-time"> -->
                 <!-- every available time must be inserted in here -->
-                <div class="time-button available-time"><%= call.start_time.strftime('%H:%M') %></div>
+                <div class="d-flex">
+                <div class="time-button available-time"><%= call.strftime('%H:%M') %></div>
                 <%#= link_to call.start_time.strftime('%H:%M'), 'confirm', class: 'confirm-button available-time not-expanded' %>
                 <%= link_to 'Confirm', booking_welcome_call_path(@booking.booking_auth_token, @booking, call), method: :patch, class: 'confirm-button available-time not-expanded' %>
                 <!-- <button class="time-button">12:00</button> -->
+                </div>
               <!-- </div> -->
             <% end %>
           <% end %>

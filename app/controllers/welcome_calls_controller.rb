@@ -64,21 +64,35 @@ class WelcomeCallsController < ApplicationController
   def book
     @booking = Booking.find(params[:booking_id])
     @user = @booking.user
-    @welcome_calls = WelcomeCall.all.where("start_time > ? AND start_time < ? AND available = ?", (Date.today + 1.day), (Date.today + 9.days), true)
-    if params[:date] && params[:date].to_date < Date.today + 9.days
-      if @welcome_calls.where("start_time = ?", params[:date].to_date).any?
-        @date = params[:date].to_date
+    booked_welcome_call_times = []
+    WelcomeCall.all.where("start_time > ? AND available = ?", Date.today, false).each{ |call| booked_welcome_call_times << call.start_time }
+    @available_times = array_of_dates(booked_welcome_call_times)
+    # @welcome_calls = WelcomeCall.all.where("start_time > ? AND start_time < ? AND available = ?", (Date.today + 1.day), (Date.today + 9.days), true)
+
+    date_params = params[:date].to_date if params[:date]
+    if date_params && date_params < Date.today + 9.days
+      if @available_times.find(date_params.all_day).any?
+        @date = date_params
       else
-        next_helper = @welcome_calls.where("start_time > ?", params[:date])
-        @date = next_helper.any? ? next_helper.first.start_time.to_date : Date.today
+        next_helper = @available_times.select { |available_time| available_time > date_params }
+        @date = next_helper.any? ? next_helper.first.to_date : Date.today
       end
     else
-      @date = @welcome_calls.where("start_time > ?", Date.today).first.start_time.to_date
+      @date = @available_times.select { |available_time| available_time > Date.today}.first.to_date
+    #   if @welcome_calls.where("start_time = ?", params[:date].to_date).any?
+    #     @date = params[:date].to_date
+    #   else
+    #     next_helper = @welcome_calls.where("start_time > ?", params[:date].to_date)
+    #     @date = next_helper.any? ? next_helper.first.start_time.to_date : Date.today
+    #   end
+    # else
+    #   @date = @welcome_calls.where("start_time > ?", Date.today).first.start_time.to_date
     end
 
     # @date = params[:date].present? ? params[:date].to_date : Date.today
     # welcome calls on that date
-    @date_welcome_calls = @welcome_calls.where(start_time: @date.all_day) if @welcome_calls.where(start_time: @date.all_day).length.positive?
+    @date_available_times = @available_times.select { |available_time| available_time.to_date == @date } if @available_times.select { |available_time| available_time.to_date == @date }.length.positive?
+    # @date_welcome_calls = @welcome_calls.where(start_time: @date.all_day) if @welcome_calls.where(start_time: @date.all_day).length.positive?
 
     @month_helper = params[:month].to_date if params[:month]
     @month_param = params[:month] && Date.today <= @month_helper && @month_helper <= Date.today + 9.days ? @month_helper : Date.today
@@ -167,5 +181,24 @@ class WelcomeCallsController < ApplicationController
       :available,
       :booking_id
     )
+  end
+
+  def date_of_next(day)
+    date  = Date.parse(day)
+    delta = date >= Date.today ? 0 : 7
+    date + delta
+  end
+
+  def array_of_dates(booked_welcome_call_times)
+    available_times = []
+    ['Saturday', 'Tuesday', 'Wednesday'].each do |date|
+      next if date_of_next(date) == Date.today
+
+      available_times << Time.parse("#{date_of_next(date)} 10am")
+      while available_times.last + 30.minutes < Time.parse("#{date_of_next(date)} 18:30pm")
+        available_times << available_times.last + 30.minutes unless booked_welcome_call_times.include?(available_times.last + 30.minutes)
+      end
+    end
+    return available_times
   end
 end
