@@ -86,6 +86,7 @@
         max-height: 400px;
         .time-list{
           display: flex;
+          flex-direction: column;
           justify-content: space-between;
           .available-time{
             padding: 13px 10px;

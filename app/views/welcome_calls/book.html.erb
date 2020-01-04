@@ -1,4 +1,3 @@
-<%= @date_available_times %>
 <div class="calendar-postion">
   <div class="calendar-wrapper">
     <div class="calendar-section info-text">
@@ -136,11 +135,11 @@
             <% @date_available_times.each do |call| %>
               <!-- <div class="available-time"> -->
                 <!-- every available time must be inserted in here -->
-                <div class="d-flex">
-                <div class="time-button available-time"><%= call.strftime('%H:%M') %></div>
-                <%#= link_to call.start_time.strftime('%H:%M'), 'confirm', class: 'confirm-button available-time not-expanded' %>
-                <%= link_to 'Confirm', booking_welcome_call_path(@booking.booking_auth_token, @booking, call), method: :patch, class: 'confirm-button available-time not-expanded' %>
-                <!-- <button class="time-button">12:00</button> -->
+                <div class="d-flex justify-content-between">
+                  <div class="time-button available-time"><%= call.strftime('%H:%M') %></div>
+                  <%#= link_to call.start_time.strftime('%H:%M'), 'confirm', class: 'confirm-button available-time not-expanded' %>
+                  <%= link_to 'Confirm', booking_welcome_call_path(@booking.booking_auth_token, @booking, call), method: :patch, class: 'confirm-button available-time not-expanded' %>
+                  <!-- <button class="time-button">12:00</button> -->
                 </div>
               <!-- </div> -->
             <% end %>
