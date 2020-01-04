@@ -61,14 +61,13 @@ class WelcomeCallsController < ApplicationController
   #   @welcome_call = WelcomeCall.new(welcome_calls_params)
   # end
 
-  def book
+  def new
     @booking = Booking.find(params[:booking_id])
     @user = @booking.user
     booked_welcome_call_times = []
     WelcomeCall.all.where("start_time > ? AND available = ?", Date.today, false).each{ |call| booked_welcome_call_times << call.start_time }
     @available_times = array_of_dates(booked_welcome_call_times)
     # @welcome_calls = WelcomeCall.all.where("start_time > ? AND start_time < ? AND available = ?", (Date.today + 1.day), (Date.today + 9.days), true)
-
     date_params = params[:date].to_date if params[:date]
     if date_params && date_params < Date.today + 9.days
       if @available_times.select { |available_time| available_time.to_date == date_params }.length.positive?
@@ -105,12 +104,17 @@ class WelcomeCallsController < ApplicationController
     @date_range = (@month_param.beginning_of_month.beginning_of_week..@month_param.end_of_month.end_of_week).to_a
   end
 
-  def update
+  def create
     @booking = Booking.find(params[:booking_id])
     @user = @booking.user
-    @welcome_call = WelcomeCall.find(params[:id])
-    if @welcome_call.booking.nil?
-      if @welcome_call.update(available: false, booking_id: @booking.id, name: @user.full_name)
+    @welcome_call = WelcomeCall.new(welcome_calls_params)
+    @welcome_call.start_time = @welcome_call.start_time + 1.hour
+    @welcome_call.end_time = @welcome_call.end_time + 1.hour
+    @welcome_call.available = false
+    @welcome_call.booking_id = @booking.id
+    @welcome_call.name = @user.full_name
+    if first_welcome_call?(@booking)
+      if @welcome_call.save
         # Send email with all the information
         UserMailer.welcome_call(@booking).deliver_now
         flash[:alert] = "We just send you an email with all informations."
@@ -196,17 +200,22 @@ class WelcomeCallsController < ApplicationController
 
   def array_of_dates(booked_welcome_call_times)
     available_times = []
-    ['Saturday', 'Tuesday', 'Wednesday'].each do |date|
-      next if date_of_next(date) == Date.today
+    ['Saturday', 'Tuesday', 'Wednesday'].each do |day|
+      next if date_of_next(day) == Date.today
 
-      available_times << Time.parse("#{date_of_next(date)} 10am")
-      while available_times.last + 30.minutes < Time.parse("#{date_of_next(date)} 18:30pm")
-        available_times << available_times.last + 30.minutes unless booked_welcome_call_times.include?(available_times.last + 30.minutes)
+      available_times << Time.parse("#{date_of_next(day)} 10am")
+      while available_times.last + 30.minutes < Time.parse("#{date_of_next(day)} 6:30pm")
+        next_available_time = available_times.last + 30.minutes
+        available_times << next_available_time unless booked_welcome_call_times.include?(next_available_time)
       end
     end
     return available_times
   end
 
+  def first_welcome_call?(booking)
+    # returns true if their is no welcome call for this booking in the future
+    booking.welcome_calls.each{ |welcome_call| !welcome_call.start_time.future? ? true : false}
+  end
   # def array_of_dates
   #   available_times = []
   #   ['Saturday', 'Tuesday', 'Wednesday'].each do |date|

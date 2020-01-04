@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :welcome_calls, only: [:index]
   resources :bookings, path: 'bookings/(:booking_auth_token)', only: [:update] do
     get 'welcome_calls/book', to: 'welcome_calls#book', as: 'book_welcome_call'
-    resources :welcome_calls, only: [:update]
+    resources :welcome_calls, only: [:new, :create, :edit,:update]
     get 'welcome_calls/:id/useredit', to: 'welcome_calls#useredit', as: 'useredit_welcome_call'
     patch 'welcome_calls/:id/userupdate/:old_id', to: 'welcome_calls#userupdate', as: 'userupdate_welcome_call'
     patch 'welcome_calls/:id/cancel', to: 'welcome_calls#cancel', as: 'cancel_welcome_call'
