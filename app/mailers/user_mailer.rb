@@ -14,8 +14,16 @@ class UserMailer < ApplicationMailer
     end
   end
 
-  def welcome_call(booking)
-    @booking = booking
+  def welcome_call(welcome_call)
+    @welcome_call = welcome_call
+    @booking = @welcome_call.booking
+    @user = @booking.user
+    mail(to: @user.email, subject: 'Stacey - coliving - welcome call')
+  end
+
+  def welcome_call_rescheduled(welcome_call)
+    @welcome_call = welcome_call
+    @booking = @welcome_call.booking
     @user = @booking.user
     mail(to: @user.email, subject: 'Stacey - coliving - welcome call')
   end
