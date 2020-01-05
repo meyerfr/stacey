@@ -1,6 +1,6 @@
 class WelcomeCallsController < ApplicationController
   skip_before_action :authenticate_user!
-  before_action :check_booking_auth_token!, only: [:book, :useredit]
+  before_action :check_booking_auth_token!, only: [:new, :useredit]
 
   # neccessary actions:
     # admin actions
@@ -53,14 +53,6 @@ class WelcomeCallsController < ApplicationController
     # @date_range = (@month_param.beginning_of_month.beginning_of_week..@month_param.end_of_month.end_of_week).to_a
   end
 
-  # def new
-  #   @welcome_call = WelcomeCall.new
-  # end
-
-  # def create
-  #   @welcome_call = WelcomeCall.new(welcome_calls_params)
-  # end
-
   def new
     @booking = Booking.find(params[:booking_id])
     @user = @booking.user
@@ -80,27 +72,11 @@ class WelcomeCallsController < ApplicationController
       @date = @available_times.select { |available_time| available_time.to_date > Date.today }.first.to_date
     end
 
-    # if date_params && date_params < Date.today + 9.days
-    #   if @welcome_calls.where("start_time = ?", params[:date].to_date).any?
-    #     @date = params[:date].to_date
-    #   else
-    #     next_helper = @welcome_calls.where("start_time > ?", params[:date].to_date)
-    #     @date = next_helper.any? ? next_helper.first.start_time.to_date : Date.today
-    #   end
-    # else
-    #   @date = @welcome_calls.where("start_time > ?", Date.today).first.start_time.to_date
-    # end
-
-    # @date = params[:date].present? ? params[:date].to_date : Date.today
-    # welcome calls on that date
-
     @date_available_times = @available_times.select { |available_time| available_time.to_date == @date } if @available_times.select { |available_time| available_time.to_date == @date }.length.positive?
-    # @date_available_times = @available_times.select { |available_time| available_time.to_date == Date.tomorrow } if @available_times.select { |available_time| available_time.to_date == Date.tomorrow }.length.positive?
-    # @date_welcome_calls = @welcome_calls.where(start_time: @date.all_day) if @welcome_calls.where(start_time: @date.all_day).length.positive?
 
     @month_helper = params[:month].to_date if params[:month]
     @month_param = params[:month] && Date.today <= @month_helper && @month_helper <= Date.today + 9.days ? @month_helper : Date.today
-    # @month_param = params[:month] ? "#{params[:month]}-01".to_date : Date.today
+
     @date_range = (@month_param.beginning_of_month.beginning_of_week..@month_param.end_of_month.end_of_week).to_a
   end
 
@@ -121,12 +97,13 @@ class WelcomeCallsController < ApplicationController
         redirect_to :root
       else
         flash[:alert] = "Oops, something wrent wrong. Please try it again."
-        redirect_to booking_book_welcome_call_path(@booking.booking_auth_token, @booking)
+        redirect_to new_booking_welcome_call_path(@booking.booking_auth_token, @booking)
       end
     else
-      flash[:alert] = "Your call is already scheduled for the #{WelcomeCall.find_by(booking_id: @booking.id).start_time.strftime('%d.%B %Y')}. Please check your mails."
+      scheduled_welcome_call = WelcomeCall.find_by(booking_id: @booking.id)
+      flash[:alert] = "Your call is already scheduled for the #{scheduled_welcome_call.start_time.strftime('%d.%B %Y')} #{scheduled_welcome_call.start_time.strftime('%H:%M')}. Please check your mails."
       # redirect to welcome_call#edit page
-      redirect_to booking_book_welcome_call_path(@booking.booking_auth_token, @booking)
+      redirect_to new_booking_welcome_call_path(@booking.booking_auth_token, @booking)
     end
   end
 
@@ -200,13 +177,23 @@ class WelcomeCallsController < ApplicationController
 
   def array_of_dates(booked_welcome_call_times)
     available_times = []
-    ['Saturday', 'Tuesday', 'Wednesday'].each do |day|
+    ['Sunday', 'Tuesday', 'Wednesday'].each do |day|
       next if date_of_next(day) == Date.today
 
-      available_times << Time.parse("#{date_of_next(day)} 10am")
-      while available_times.last + 30.minutes < Time.parse("#{date_of_next(day)} 6:30pm")
-        next_available_time = available_times.last + 30.minutes
-        available_times << next_available_time unless booked_welcome_call_times.include?(next_available_time)
+      # finding the first available time slot
+      first_available_time = Time.parse("#{date_of_next(day)} 10am")
+      first_available_time += 30.minutes while booked_welcome_call_times.include?(first_available_time + 1.hour)
+      available_times << first_available_time
+      # Finding every available time slot
+      time_differrence = 30
+      while available_times.last + time_differrence.minutes < Time.parse("#{date_of_next(day)} 6:30pm")
+        next_available_time = available_times.last + time_differrence.minutes
+        if booked_welcome_call_times.include?(next_available_time + 1.hour)
+          time_differrence = 60
+        else
+          available_times << next_available_time
+          time_differrence = 30
+        end
       end
     end
     return available_times
@@ -214,7 +201,12 @@ class WelcomeCallsController < ApplicationController
 
   def first_welcome_call?(booking)
     # returns true if their is no welcome call for this booking in the future
-    booking.welcome_calls.each{ |welcome_call| !welcome_call.start_time.future? ? true : false}
+    return_value = true
+    booking.welcome_calls.each do |welcome_call|
+      welcome_call.start_time.future?
+      return_value = false
+    end
+    return_value
   end
   # def array_of_dates
   #   available_times = []
