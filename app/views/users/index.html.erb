@@ -11,9 +11,9 @@
         <% end %>
       </div>
       <% if params[:user_group] == 'tenants' %>
-        <span>We have <%= User.all.where(role: 'Tenant').count %> <%= User.all.where(role: 'Tenant').count > 1 ? tenants : tenant %></span>
+        <span>We have <%= User.all.where(role: 'Tenant').count %> <%= User.all.where(role: 'Tenant').count > 1 ? 'tenants' : 'tenant' %></span>
       <% else %>
-        <span>We have <%= User.all.where(role: 'Applicant').count %> <%= User.all.where(role: 'Applicant').count > 1 ? applicants : applicant %></span>
+        <span>We have <%= User.all.where(role: 'Applicant').count %> <%= User.all.where(role: 'Applicant').count > 1 ? 'applicants' : 'applicant' %></span>
       <% end %>
       <div class="query">
         <%= form_tag users_path, method: :get do %>
