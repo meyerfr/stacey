@@ -184,7 +184,7 @@ class WelcomeCallsController < ApplicationController
   end
 
   def find_all_dates
-    duration = Date.today..(Date.today + 9)
+    duration = Date.tomorrow..(Date.today + 9)
     return duration.select{ |day| day.monday? || day.tuesday? || day.wednesday? }
   end
 
