@@ -28,8 +28,8 @@
 # )
 
 print('create Admins')
-fritz = User.create(first_name: 'Fritz', last_name: 'Meyer', email: 'fritz@stacey-living.de', password: 'FritzMeyer', role: 'Admin', dob: '2000-04-02', job: 'Developer', gender: ['Male'], phone_code: '+49', phone: '01737557722')
-matteo = User.create(first_name: 'Matteo', last_name: 'Kreidler', email: 'matteo@stacey-living.de', password: 'MatteoKreidler', role: 'Admin', dob: '1996-08-26', job: 'CEO', gender: ['Male'], phone_code: '+49', phone: '015234514111')
+fritz = User.create(first_name: 'Fritz', last_name: 'Meyer', email: 'fritz@stacey-living.de', password: 'FritzMeyer', role: 'Admin', dob: '2000-04-02', job: 'Developer', gender: ['Male'], phone_code: '+49', phone_number: '01737557722')
+matteo = User.create(first_name: 'Matteo', last_name: 'Kreidler', email: 'matteo@stacey-living.de', password: 'MatteoKreidler', role: 'Admin', dob: '1996-08-26', job: 'CEO', gender: ['Male'], phone_code: '+49', phone_number: '015234514111')
 
 print('create Bookings')
 fritz_booking = Booking.create(user_id: fritz.id, move_in: Date.tomorrow, move_out: Date.tomorrow + 3.months)
