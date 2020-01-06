@@ -27,17 +27,61 @@
 #   prefered_suite: ['Basic']
 # )
 
-print('create Admins')
-fritz = User.create(first_name: 'Fritz', last_name: 'Meyer', email: 'fritz@stacey-living.de', password: 'FritzMeyer', role: 'Admin', dob: '2000-04-02', job: 'Developer', gender: ['Male'], phone_code: '+49', phone_number: '01737557722', prefered_suite: ['Mighty'])
-matteo = User.create!(first_name: 'Matteo', last_name: 'Kreidler', email: 'matteo@stacey-living.de', password: 'MatteoKreidler', role: 'Admin', dob: '1996-08-26', job: 'CEO', gender: ['Male'], phone_code: '+49', phone_number: '015234514111', prefered_suite: ['Mighty'])
+# print('create Admins')
+# fritz = User.create(first_name: 'Fritz', last_name: 'Meyer', email: 'fritz@stacey-living.de', password: 'FritzMeyer', role: 'Admin', dob: '2000-04-02', job: 'Developer', gender: ['Male'], phone_code: '+49', phone_number: '01737557722', prefered_suite: ['Mighty'])
+# matteo = User.create!(first_name: 'Matteo', last_name: 'Kreidler', email: 'matteo@stacey-living.de', password: 'MatteoKreidler', role: 'Admin', dob: '1996-08-26', job: 'CEO', gender: ['Male'], phone_code: '+49', phone_number: '015234514111', prefered_suite: ['Mighty'])
 
-print('create Bookings')
-fritz_booking = Booking.create(user_id: fritz.id, move_in: Date.tomorrow, move_out: Date.tomorrow + 3.months)
-matteo_booking = Booking.create(user_id: matteo.id, move_in: Date.tomorrow, move_out: Date.tomorrow + 3.months)
+# print('create Bookings')
+# fritz_booking = Booking.create(user_id: fritz.id, move_in: Date.tomorrow, move_out: Date.tomorrow + 3.months)
+# matteo_booking = Booking.create(user_id: matteo.id, move_in: Date.tomorrow, move_out: Date.tomorrow + 3.months)
 
-print('create WelcomeCalls')
-WelcomeCall.create(start_time: Time.parse('2020-01-09 5:30pm'), end_time: Time.parse('2020-01-09 5:45pm'), available: false, booking_id: fritz_booking)
-WelcomeCall.create(start_time: Time.parse('2020-01-09 5:00pm'), end_time: Time.parse('2020-01-09 5:15pm'), available: false, booking_id: matteo_booking)
+# print('create WelcomeCalls')
+# WelcomeCall.create(start_time: Time.parse('2020-01-09 5:30pm'), end_time: Time.parse('2020-01-09 5:45pm'), available: false, booking_id: fritz_booking)
+# WelcomeCall.create(start_time: Time.parse('2020-01-09 5:00pm'), end_time: Time.parse('2020-01-09 5:15pm'), available: false, booking_id: matteo_booking)
+
+# Project.create(street: "Dorotheen Straße", house_number: "5-7", city: "Hamburg", zipcode: 12345, name: "Mühlenkamp", description: "At  STACEY we believe that beautifully designed spaces bring people together. Whether you’re looking to mingle with new people, get creative in the kitchen or open yourself up to new experiences, our Eppendorf location can give you all this and more.\\r\\nFrom the great living room and the shared kitchen to our beautiful terrace with a barbecue, your passion points will be catered for. Not to mention the included monthly member events!", pictures:["https://res.cloudinary.com/dvuqwvjay/image/upload/v1576075659/M%C3%BChlenkamp/IMG_4061_location_muehlenkamp.jpg", "https://res.cloudinary.com/dvuqwvjay/image/upload/v1576075659/M%C3%BChlenkamp/IMG_4077_location_muehlenkamp.jpg", "https://res.cloudinary.com/dvuqwvjay/image/upload/v1576075659/M%C3%BChlenkamp/IMG_4068_location_muehlenkamp.jpg"])
+
+# Room.create(
+#  project_id: 1,
+#  number: "1",
+#  house_number: "5",
+#  price: [900.0, 850.0, 800.0],
+#  name: "Mighty",
+#  size: 15.5,
+#  description: "Scandinavian minimalism in the heart of Hamburg. Our Mighty Suites are our flagship with regard to modern living. A comfy double bed, side table, armchair, floor lamp, closet, hangers, artwork & even bedding are included.",
+#  pictures:
+#   ["https://res.cloudinary.com/dvuqwvjay/image/upload/v1576075783/M%C3%BChlenkamp/Mighty/IMG_4015_mighty.jpg",
+#    "https://res.cloudinary.com/dvuqwvjay/image/upload/v1576075782/M%C3%BChlenkamp/Mighty/IMG_4021_mighty.jpg",
+#    "https://res.cloudinary.com/dvuqwvjay/image/upload/v1576075782/M%C3%BChlenkamp/Mighty/IMG_4016_mighty.jpg"]
+# )
+
+# Room.create(
+#  project_id: 1,
+#  number: "1",
+#  house_number: "5",
+#  price: [950.0, 900.0, 850.0],
+#  name: "Premium",
+#  size: 15.5,
+#  description: "Scandinavian minimalism in the heart of Hamburg. Our Premium Suites are our flagship with regard to modern living. A comfy double bed, side table, armchair, floor lamp, closet, hangers, artwork & even bedding are included.",
+#  pictures:
+#   ["https://res.cloudinary.com/dvuqwvjay/image/upload/v1576075783/M%C3%BChlenkamp/Mighty/IMG_4015_mighty.jpg",
+#    "https://res.cloudinary.com/dvuqwvjay/image/upload/v1576075782/M%C3%BChlenkamp/Mighty/IMG_4021_mighty.jpg",
+#    "https://res.cloudinary.com/dvuqwvjay/image/upload/v1576075782/M%C3%BChlenkamp/Mighty/IMG_4016_mighty.jpg"]
+# )
+
+# Room.create(
+#  project_id: 1,
+#  number: "1",
+#  house_number: "5",
+#  price: [1000.0, 950.0, 900.0],
+#  name: "Jumbo",
+#  size: 15.5,
+#  description: "Scandinavian minimalism in the heart of Hamburg. Our Jumbo Suites are our flagship with regard to modern living. A comfy double bed, side table, armchair, floor lamp, closet, hangers, artwork & even bedding are included.",
+#  pictures:
+#   ["https://res.cloudinary.com/dvuqwvjay/image/upload/v1576075783/M%C3%BChlenkamp/Mighty/IMG_4015_mighty.jpg",
+#    "https://res.cloudinary.com/dvuqwvjay/image/upload/v1576075782/M%C3%BChlenkamp/Mighty/IMG_4021_mighty.jpg",
+#    "https://res.cloudinary.com/dvuqwvjay/image/upload/v1576075782/M%C3%BChlenkamp/Mighty/IMG_4016_mighty.jpg"]
+# )
 
 # print('create Amenities')
 # wifi = Amenity.create(title: 'High Speed Wifi')
@@ -53,7 +97,7 @@ WelcomeCall.create(start_time: Time.parse('2020-01-09 5:00pm'), end_time: Time.p
 # one_person = Amenity.create(title: 'One Person')
 # two_people = Amenity.create(title: 'Two People')
 
-# print('create Icons')
+# # print('create Icons')
 # Icon.create(amenity_id: wifi.id, icon_text: '<i class="fas fa-wifi"></i>')
 # Icon.create(amenity_id: speakers.id, icon_text: '<i class="fas fa-volume-up"></i>')
 # Icon.create(amenity_id: furnished.id, icon_text: '<i class="fas fa-couch"></i>')
