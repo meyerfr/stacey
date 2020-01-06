@@ -27,14 +27,17 @@
 #   prefered_suite: ['Basic']
 # )
 
+print('create Admins')
+fritz = User.create(first_name: 'Fritz', last_name: 'Meyer', email: 'fritz@stacey-living.de', password: 'FritzMeyer', role: 'Admin', dob: '2000-04-02', job: 'Developer', gender: ['Male'], phone_code: '+49', phone: '01737557722')
+matteo = User.create(first_name: 'Matteo', last_name: 'Kreidler', email: 'matteo@stacey-living.de', password: 'MatteoKreidler', role: 'Admin', dob: '1996-08-26', job: 'CEO', gender: ['Male'], phone_code: '+49', phone: '015234514111')
+
+print('create Bookings')
+fritz_booking = Booking.create(user_id: fritz.id, move_in: Date.tomorrow, move_out: Date.tomorrow + 3.months)
+matteo_booking = Booking.create(user_id: matteo.id, move_in: Date.tomorrow, move_out: Date.tomorrow + 3.months)
+
 print('create WelcomeCalls')
-WelcomeCall.create(start_time: Time.parse('2020-01-01 2pm'),end_time: Time.parse('2020-01-01 2:15pm'), available: false, booking_id: Booking.last.id)
-WelcomeCall.create(start_time: Time.parse('2020-01-14 3pm'), end_time: Time.parse('2020-01-14 3:15pm'), available: false, booking_id: Booking.last.id)
-WelcomeCall.create(start_time: Time.parse('2020-01-15 4pm'), end_time: Time.parse('2020-01-15 4:15pm'), available: false, booking_id: Booking.last.id)
-WelcomeCall.create(start_time: Time.parse('2020-01-11 5pm'), end_time: Time.parse('2020-01-11 5:15pm'), available: false, booking_id: Booking.last.id)
-WelcomeCall.create(start_time: Time.parse('2020-01-10 6pm'), end_time: Time.parse('2020-01-10 6:15pm'), available: false, booking_id: Booking.last.id)
-WelcomeCall.create(start_time: Time.parse('2020-01-10 6:30pm'), end_time: Time.parse('2020-01-10 6:45pm'), available: false, booking_id: Booking.last.id)
-WelcomeCall.create(start_time: Time.parse('2020-01-10 7:00pm'), end_time: Time.parse('2020-01-10 7:15pm'), available: false, booking_id: Booking.last.id)
+WelcomeCall.create(start_time: Time.parse('2020-01-09 5:30pm'), end_time: Time.parse('2020-01-09 5:45pm'), available: false, booking_id: fritz_booking)
+WelcomeCall.create(start_time: Time.parse('2020-01-09 5:00pm'), end_time: Time.parse('2020-01-09 5:15pm'), available: false, booking_id: matteo_booking)
 
 # print('create Amenities')
 # wifi = Amenity.create(title: 'High Speed Wifi')
