@@ -10,9 +10,9 @@ class ContractsController < ApplicationController
       format.html
       format.pdf do
         render pdf: "Contract #{@user.first_name} #{@user.last_name}",
-        page_size: 'A4',
+        dpi: '100',
         template: "contracts/_contract.html.erb",
-        layout: "pdf.html",
+        layout: "pdf.html.erb",
         zoom: 3
       end
     end
