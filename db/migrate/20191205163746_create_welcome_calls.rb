@@ -4,7 +4,7 @@ class CreateWelcomeCalls < ActiveRecord::Migration[5.2]
       t.string :name
       t.datetime :start_time
       t.datetime :end_time
-      t.references :user, foreign_key: true
+      t.references :booking, foreign_key: true
       t.boolean :available, default: true
     end
   end

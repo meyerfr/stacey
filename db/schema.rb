@@ -10,19 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_29_093912) do
+ActiveRecord::Schema.define(version: 2020_01_08_114500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "amenities", force: :cascade do |t|
-    t.bigint "room_id"
-    t.bigint "project_id"
+    t.string "icon_text"
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["project_id"], name: "index_amenities_on_project_id"
-    t.index ["room_id"], name: "index_amenities_on_room_id"
   end
 
   create_table "bookings", force: :cascade do |t|
@@ -48,14 +45,6 @@ ActiveRecord::Schema.define(version: 2019_12_29_093912) do
     t.index ["booking_id"], name: "index_contracts_on_booking_id"
   end
 
-  create_table "icons", force: :cascade do |t|
-    t.string "icon_text"
-    t.bigint "amenity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["amenity_id"], name: "index_icons_on_amenity_id"
-  end
-
   create_table "partners", force: :cascade do |t|
     t.string "name"
     t.string "company"
@@ -65,6 +54,15 @@ ActiveRecord::Schema.define(version: 2019_12_29_093912) do
     t.text "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "project_amenities", force: :cascade do |t|
+    t.bigint "amenity_id"
+    t.bigint "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["amenity_id"], name: "index_project_amenities_on_amenity_id"
+    t.index ["project_id"], name: "index_project_amenities_on_project_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -77,6 +75,15 @@ ActiveRecord::Schema.define(version: 2019_12_29_093912) do
     t.json "pictures"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "room_amenities", force: :cascade do |t|
+    t.bigint "amenity_id"
+    t.bigint "room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["amenity_id"], name: "index_room_amenities_on_amenity_id"
+    t.index ["room_id"], name: "index_room_amenities_on_room_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -128,17 +135,18 @@ ActiveRecord::Schema.define(version: 2019_12_29_093912) do
     t.string "name"
     t.datetime "start_time"
     t.datetime "end_time"
-    t.boolean "available", default: true
     t.bigint "booking_id"
+    t.boolean "available", default: true
     t.index ["booking_id"], name: "index_welcome_calls_on_booking_id"
   end
 
-  add_foreign_key "amenities", "projects"
-  add_foreign_key "amenities", "rooms"
   add_foreign_key "bookings", "rooms"
   add_foreign_key "bookings", "users"
   add_foreign_key "contracts", "bookings"
-  add_foreign_key "icons", "amenities"
+  add_foreign_key "project_amenities", "amenities"
+  add_foreign_key "project_amenities", "projects"
+  add_foreign_key "room_amenities", "amenities"
+  add_foreign_key "room_amenities", "rooms"
   add_foreign_key "rooms", "projects"
   add_foreign_key "welcome_calls", "bookings"
 end
