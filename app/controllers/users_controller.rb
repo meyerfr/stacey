@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     @user.first_name = @user.first_name.capitalize
     @user.last_name = @user.last_name.capitalize
     @user.email = @user.email.downcase
-    @user.role = 'Applicant'
+    @user.role = 'applicant'
     if @user.save
       # create booking. Validation and correct duration has been checked
       move_in_helper_array = users_params[:bookings_attributes]['0'].values.first(3).map! { |e| e.to_i }.reverse
@@ -45,9 +45,9 @@ class UsersController < ApplicationController
 
     if user_group_param
       if user_group_param == 'applicants'
-        @users = User.all.where(role: 'Applicant')
+        @users = User.all.where(role: 'applicant').order(created_at: :desc)
       elsif user_group_param == 'tenants'
-        @users = User.all.where(role: 'Tenant')
+        @users = User.all.where(role: 'tenant').order(created_at: :desc)
       end
     end
     if search_param
@@ -56,7 +56,7 @@ class UsersController < ApplicationController
         OR users.last_name @@ :search \
         OR users.email @@ :search \
       "
-      @users = User.where(sql_query, search: "%#{params[:search]}%")
+      @users = User.where(sql_query, search: "%#{params[:search]}%").order(created_at: :desc)
     end
   end
 
